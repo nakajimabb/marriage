@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_19_084454) do
+ActiveRecord::Schema.define(version: 2019_08_29_110745) do
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "provider", default: "email", null: false
@@ -29,13 +29,33 @@ ActiveRecord::Schema.define(version: 2019_08_19_084454) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
-    t.string "name"
+    t.integer "failed_attempts", default: 0, null: false
+    t.string "unlock_token"
+    t.datetime "locked_at"
     t.string "nickname"
-    t.string "image"
     t.string "email"
     t.text "tokens"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "first_name_kana"
+    t.string "last_name_kana"
+    t.string "first_name_en"
+    t.string "last_name_en"
+    t.integer "sex", limit: 1, null: false
+    t.date "birthday"
+    t.string "tel"
+    t.string "fax"
+    t.integer "country", limit: 2
+    t.integer "zip"
+    t.integer "prefecture", limit: 2
+    t.string "city"
+    t.string "house_number"
+    t.integer "religion", limit: 1
+    t.integer "sect", limit: 1
+    t.string "bio"
+    t.boolean "admin", default: false, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
