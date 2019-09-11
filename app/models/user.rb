@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class User < ActiveRecord::Base
-  REGISTRABLE_ATTRIBUTES = %i(uid nickname email first_name last_name first_name_kana last_name_kana
+  REGISTRABLE_ATTRIBUTES = %i(nickname email first_name last_name first_name_kana last_name_kana
    first_name_en last_name_en sex birthday tel fax country zip prefecture city house_number religion sect bio)
 
   # Include default devise modules. Others available are:
