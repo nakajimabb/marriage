@@ -34,7 +34,18 @@ module Marriage
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
+    # 言語ファイルを階層ごとに設定するための記述
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
+
+    # アプリケーションが対応している言語のホワイトリスト(ja = 日本語, en = 英語)
+    config.i18n.available_locales = %i(ja en)
+
+    # 上記の対応言語以外の言語が指定された場合、エラーとするかの設定
+    config.i18n.enforce_available_locales = true
+
+    # デフォルトの言語設定
     config.i18n.default_locale = :ja
+
     config.time_zone = 'Tokyo'
     config.active_record.default_timezone = :local
   end

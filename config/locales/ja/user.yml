@@ -1,0 +1,23 @@
+ja:
+  activerecord:
+    attributes:
+      user:
+        id: "ID"
+        nickname: "ﾆｯｸﾈｰﾑ"
+        name: "氏名"
+        first_name: "名"
+        last_name: "氏"
+        sex: "性別"
+        kana: "シメイ"
+        first_kana: "メイ"
+        last_kana: "シ"
+        birthday: "誕生日"
+        email: "email"
+        bio: "自己紹介"
+        password: "ﾊﾟｽﾜｰﾄﾞ"
+        password_confirmation: "ﾊﾟｽﾜｰﾄﾞ確認"
+  enum:
+    user:
+      sex:
+        male: '男性'
+        female: '女性'
