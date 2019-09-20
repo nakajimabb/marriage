@@ -26,7 +26,7 @@ class UsersController < ApplicationController
         render status: 500, json: {user: @user}
       end
     else
-      render status: 401
+      render status: 401, json: {errors: @user.errors}
     end
   end
 
@@ -35,7 +35,7 @@ class UsersController < ApplicationController
       if @user.update(user_params)
         render json: {user: @user}
       else
-        render status: 500, json: {user: @user}
+        render status: 500, json: {errors: @user.errors}
       end
     else
       render status: 401
