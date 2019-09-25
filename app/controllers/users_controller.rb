@@ -21,22 +21,31 @@ class UsersController < ApplicationController
     if current_user&.admin?
       @user = User.new(user_params)
       if @user.save
-        render json: {user: @user}
+        render status: 200, json: {users: @user}
       else
-        render status: 500, json: {user: @user}
+        render status: 500, json: {errors: @user.errors}
       end
     else
-      render status: 401, json: {errors: @user.errors}
+      render status: 401
     end
   end
 
   def update
     if current_user&.admin? || current_user&.id == @user.id
       if @user.update(user_params)
-        render json: {user: @user}
+        render status: 200, json: {users: @user}
       else
         render status: 500, json: {errors: @user.errors}
       end
+    else
+      render status: 401
+    end
+  end
+
+  def destroy
+    if current_user&.admin?
+      @user.destroy
+      render status: 200
     else
       render status: 401
     end
@@ -49,6 +58,6 @@ private
   end
 
   def user_params
-    params.require(:user).permit(User::REGISTRABLE_ATTRIBUTES)
+    params.fetch(:user, {}).permit(User::REGISTRABLE_ATTRIBUTES)
   end
 end

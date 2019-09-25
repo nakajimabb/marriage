@@ -1,0 +1,12 @@
+ja:
+  dict:
+    cancel: 'キャンセル'
+    close: '閉じる'
+    create: '登録する'
+    list: '一覧'
+    save: '保存する'
+    update: '更新する'
+    search: '検索する'
+    exact: '完全一致'
+  message:
+    confirm_delete: '削除しますか？'

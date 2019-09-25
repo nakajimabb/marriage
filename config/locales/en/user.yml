@@ -1,0 +1,25 @@
+en:
+  activerecord:
+    models:
+      user: "User"
+    attributes:
+      user:
+        id: "ID"
+        nickname: "nickname"
+        name: "name"
+        first_name: "first name"
+        last_name: "last name"
+        sex: "sex"
+        kana: "kana"
+        first_kana: "first kana"
+        last_kana: "last kana"
+        birthday: "birthday"
+        email: "email"
+        bio: "bio"
+        password: "password"
+        password_confirmation: "password confirmation"
+  enum:
+    user:
+      sex:
+        male: 'male'
+        female: 'female'

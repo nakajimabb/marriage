@@ -1,5 +1,7 @@
 ja:
   activerecord:
+    models:
+      user: "会員"
     attributes:
       user:
         id: "ID"
