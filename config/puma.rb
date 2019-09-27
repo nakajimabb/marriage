@@ -10,7 +10,7 @@ threads min_threads_count, max_threads_count
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
 #
-port        ENV.fetch("PORT") { 3000 }
+# port        ENV.fetch("PORT") { 3000 }
 
 # Specifies the `environment` that Puma will run in.
 #
@@ -18,6 +18,17 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 
 # Specifies the `pidfile` that Puma will use.
 pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
+
+# socketの設定
+# ディレクトリがない場合は作成しておく
+bind "unix:tmp/sockets/puma.sock"
+
+# Daemonize the server into the background. Highly suggest that
+# this be combined with “pidfile” and “stdout_redirect”.
+#
+# The default is “false”.
+#
+daemonize true
 
 # Specifies the number of `workers` to boot in clustered mode.
 # Workers are forked web server processes. If using threads and workers together
