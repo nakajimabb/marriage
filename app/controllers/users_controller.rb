@@ -11,7 +11,9 @@ class UsersController < ApplicationController
 
   def show
     if current_user&.admin? || current_user&.id == @user.id
-      render json: {user: @user}
+      user = @user.attributes
+      user.merge!(avatar_url: @user.avatar_url)
+      render json: {user: user}
     else
       render status: 401
     end

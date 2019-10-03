@@ -16,6 +16,7 @@ ja:
         birthday: "誕生日"
         email: "email"
         bio: "自己紹介"
+        avatar: 'アバター'
         password: "ﾊﾟｽﾜｰﾄﾞ"
         password_confirmation: "ﾊﾟｽﾜｰﾄﾞ確認"
   enum:
