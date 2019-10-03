@@ -32,7 +32,12 @@ class UsersController < ApplicationController
 
   def update
     if current_user&.admin? || current_user&.id == @user.id
-      if @user.update(user_params)
+      p = user_params
+      if p[:password].blank? && p[:password_confirmation].blank?
+        p.delete(:password)
+        p.delete(:password_confirmation)
+      end
+      if @user.update(p)
         render status: 200, json: {users: @user}
       else
         render status: 500, json: {errors: @user.errors}
