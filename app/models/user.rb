@@ -2,8 +2,9 @@
 
 class User < ActiveRecord::Base
   REGISTRABLE_ATTRIBUTES = %i(nickname email first_name last_name first_name_kana last_name_kana
-                              first_name_en last_name_en sex birthday tel fax country zip prefecture city house_number religion sect bio
-                              avatar password password_confirmation )
+                              first_name_en last_name_en sex birthday tel fax lang country zip prefecture city house_number
+                              religion sect sect_name bio courtship matchmaker gene_partner
+                              avatar password password_confirmation)
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

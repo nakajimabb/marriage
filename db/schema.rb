@@ -58,25 +58,30 @@ ActiveRecord::Schema.define(version: 2019_10_02_100459) do
     t.text "tokens"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "first_name"
-    t.string "last_name"
-    t.string "first_name_kana"
-    t.string "last_name_kana"
-    t.string "first_name_en"
-    t.string "last_name_en"
+    t.string "first_name", limit: 64
+    t.string "last_name", limit: 64
+    t.string "first_name_kana", limit: 64
+    t.string "last_name_kana", limit: 64
+    t.string "first_name_en", limit: 64
+    t.string "last_name_en", limit: 64
     t.integer "sex", limit: 1, null: false
     t.date "birthday"
-    t.string "tel"
-    t.string "fax"
+    t.string "tel", limit: 16
+    t.string "fax", limit: 16
+    t.integer "lang", limit: 2
     t.integer "country", limit: 2
     t.integer "zip"
     t.integer "prefecture", limit: 2
-    t.string "city"
-    t.string "house_number"
+    t.string "city", limit: 64
+    t.string "house_number", limit: 64
     t.integer "religion", limit: 1
     t.integer "sect", limit: 1
+    t.string "sect_name", limit: 64
     t.string "bio"
+    t.boolean "courtship", default: false, null: false
+    t.boolean "matchmaker", default: false, null: false
     t.boolean "admin", default: false, null: false
+    t.string "gene_partner", limit: 10
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

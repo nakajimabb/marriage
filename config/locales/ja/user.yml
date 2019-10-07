@@ -13,14 +13,30 @@ ja:
         kana: "シメイ"
         first_name_kana: "メイ"
         last_name_kana: "シ"
+        first_name_en: "first name"
+        last_name_en: "last name"
         birthday: "誕生日"
+        tel: "電話番号"
+        fax: "FAX番号"
+        lang: "言語"
+        country: "国籍"
+        zip: "郵便番号"
+        prefecture: "都道府県"
+        city: "市区町村"
+        house_number: "番地"
         email: "email"
         bio: "自己紹介"
-        avatar: 'アバター'
+        avatar: "アバター"
+        religion: "宗教"
+        sect: "教派"
+        sect_name: "教派名"
+        courtship: "求婚中"
+        matchmaker: "仲人"
+        gene_partner: "GenePartnerID"
         password: "ﾊﾟｽﾜｰﾄﾞ"
         password_confirmation: "ﾊﾟｽﾜｰﾄﾞ確認"
   enum:
     user:
       sex:
-        male: '男性'
-        female: '女性'
+        male: "男性"
+        female: "女性"

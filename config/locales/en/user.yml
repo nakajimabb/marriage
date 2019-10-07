@@ -14,12 +14,27 @@ en:
         first_kana: "first kana"
         last_kana: "last kana"
         birthday: "birthday"
+        tel: "tel"
+        fax: "fax"
+        lang: "language"
+        country: "country"
+        zip: "zip"
+        prefecture: "prefecture"
+        city: "city"
+        house_number: "house number"
         email: "email"
         bio: "bio"
+        avatar: "avatar"
+        religion: "religion"
+        sect: "sect"
+        sect_name: "sect name"
+        courtship: "courtship"
+        matchmaker: "matchmaker"
+        gene_partner: "GenePartnerID"
         password: "password"
         password_confirmation: "password confirmation"
   enum:
     user:
       sex:
-        male: 'male'
-        female: 'female'
+        male: "male"
+        female: "female"
