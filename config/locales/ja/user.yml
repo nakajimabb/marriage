@@ -23,7 +23,7 @@ ja:
         zip: "郵便番号"
         prefecture: "都道府県"
         city: "市区町村"
-        house_number: "番地"
+        house_number: "以降の住所"
         email: "email"
         bio: "自己紹介"
         avatar: "アバター"

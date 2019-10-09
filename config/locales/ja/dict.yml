@@ -11,5 +11,3 @@ ja:
     search: '検索する'
     tool: 'ツール'
     update: '更新する'
-  message:
-    confirm_delete: '削除しますか？'
