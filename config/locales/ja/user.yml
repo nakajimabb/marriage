@@ -40,3 +40,13 @@ ja:
       sex:
         male: "男性"
         female: "女性"
+      religion:
+        christ: 'キリスト教'
+        buddhism: '仏教'
+        islam: 'イスラム教'
+        hindu: 'ヒンズー教'
+        shinto: '神道'
+        taoism: '道教'
+        newage: 'ニューエイジ'
+        secular: '無宗教'
+        other_religion: 'その他'

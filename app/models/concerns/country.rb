@@ -1,5 +1,5 @@
 module Country
-  COUNTRY = {afg: 4, alb: 8, ata: 10, dza: 12, asm: 16, and: 20, ago: 24, atg: 28,
+  CODES = {afg: 4, alb: 8, ata: 10, dza: 12, asm: 16, and: 20, ago: 24, atg: 28,
            aze: 31, arg: 32, aus: 36, aut: 40, bhs: 44, bhr: 48, bgd: 50, arm: 51,
            brb: 52, bel: 56, bmu: 60, btn: 64, bol: 68, bih: 70, bwa: 72, bvt: 74,
            bra: 76, blz: 84, iot: 86, slb: 90, vgb: 92, brn: 96, bgr: 100, mmr: 104,

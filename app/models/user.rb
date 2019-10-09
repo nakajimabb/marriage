@@ -16,9 +16,10 @@ class User < ActiveRecord::Base
   has_one_attached :avatar
 
   enum sex: {male: 1, female: 2}
-  enum religion: {christ: 1, buddhism: 2, islam: 3, hindu: 4, shinto: 5, taoism: 6, secular: 50}
+  enum religion: {christ: 1, buddhism: 2, islam: 3, hindu: 4, shinto: 5, taoism: 6, newage:7, secular: 8, other_religion: 10}
   enum lang: {en: 41, ja: 73}
-  enum country: Country::COUNTRY
+  enum country: Country::CODES
+  enum prefecture: Prefecture::CODES
 
   validates :email, presence: true, uniqueness: true
   validates :sex, presence: true
