@@ -1,45 +1,45 @@
 ja:
   activerecord:
     models:
-      user: "会員"
+      user: '会員'
     attributes:
       user:
-        id: "ID"
-        nickname: "ﾆｯｸﾈｰﾑ"
-        name: "氏名"
-        first_name: "名"
-        last_name: "氏"
-        sex: "性別"
-        kana: "シメイ"
-        first_name_kana: "メイ"
-        last_name_kana: "シ"
-        first_name_en: "first name"
-        last_name_en: "last name"
-        birthday: "誕生日"
-        tel: "電話番号"
-        fax: "FAX番号"
-        lang: "言語"
-        country: "国籍"
-        zip: "郵便番号"
-        prefecture: "都道府県"
-        city: "市区町村"
-        house_number: "以降の住所"
-        email: "email"
-        bio: "自己紹介"
-        avatar: "アバター"
-        religion: "宗教"
-        sect: "教派"
-        sect_name: "教派名"
-        courtship: "求婚中"
-        matchmaker: "仲人"
-        gene_partner: "GenePartnerID"
-        password: "ﾊﾟｽﾜｰﾄﾞ"
-        password_confirmation: "ﾊﾟｽﾜｰﾄﾞ確認"
+        id: 'Id'
+        email: 'Eメール'
+        nickname: 'ﾆｯｸﾈｰﾑ'
+        name: '氏名'
+        first_name: '名'
+        last_name: '氏'
+        sex: '性別'
+        kana: 'シメイ'
+        first_name_kana: 'メイ'
+        last_name_kana: 'シ'
+        first_name_en: 'first name'
+        last_name_en: 'last name'
+        birthday: '誕生日'
+        tel: '電話番号'
+        fax: 'FAX番号'
+        lang: '言語'
+        country: '国籍'
+        zip: '郵便番号'
+        prefecture: '都道府県'
+        city: '市区町村'
+        house_number: '以降の住所'
+        bio: '自己紹介'
+        avatar: 'アバター'
+        religion: '宗教'
+        sect: '教派'
+        sect_name: '教派名'
+        courtship: '求婚中'
+        matchmaker: '仲人'
+        gene_partner: 'GenePartnerID'
+        password: 'パスワード'
+        password_confirmation: 'パスワード（確認用）'
   enum:
     user:
       sex:
-        male: "男性"
-        female: "女性"
+        male: '男性'
+        female: '女性'
       religion:
         christ: 'キリスト教'
         buddhism: '仏教'

@@ -1,0 +1,13 @@
+en:
+  dict:
+    admin: 'Administrator'
+    cancel: 'Cancel'
+    close: 'Close'
+    create: 'Create'
+    exact: 'exact'
+    list: 'list'
+    profile: 'Profile'
+    save: 'Save'
+    search: 'Search'
+    tool: 'tool'
+    update: 'Update'

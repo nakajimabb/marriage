@@ -1,40 +1,52 @@
 en:
   activerecord:
     models:
-      user: "User"
+      user: 'User'
     attributes:
       user:
-        id: "ID"
-        nickname: "nickname"
-        name: "name"
-        first_name: "first name"
-        last_name: "last name"
-        sex: "sex"
-        kana: "kana"
-        first_kana: "first kana"
-        last_kana: "last kana"
-        birthday: "birthday"
-        tel: "tel"
-        fax: "fax"
-        lang: "language"
-        country: "country"
-        zip: "zip"
-        prefecture: "prefecture"
-        city: "city"
-        house_number: "house number"
-        email: "email"
-        bio: "bio"
-        avatar: "avatar"
-        religion: "religion"
-        sect: "sect"
-        sect_name: "sect name"
-        courtship: "courtship"
-        matchmaker: "matchmaker"
-        gene_partner: "GenePartnerID"
-        password: "password"
-        password_confirmation: "password confirmation"
+        id: 'Id'
+        email: 'Email'
+        nickname: 'Nickname'
+        name: 'Name'
+        first_name: 'First name'
+        last_name: 'Last name'
+        sex: 'Sex'
+        kana: 'Kana'
+        first_name_kana: 'First name(kana)'
+        last_name_kana: 'Last name(kana)'
+        first_name_en: 'First name'
+        last_name_en: 'Last name'
+        birthday: 'Birthday'
+        tel: 'Tel'
+        fax: 'Fax'
+        lang: 'Language'
+        country: 'Country'
+        zip: 'Zip'
+        prefecture: 'Prefecture'
+        city: 'City'
+        house_number: 'House number'
+        bio: 'bio'
+        avatar: 'Avatar'
+        religion: 'Religion'
+        sect: 'Sect'
+        sect_name: 'Sect name'
+        courtship: 'Courtship'
+        matchmaker: 'Matchmaker'
+        gene_partner: 'GenePartnerID'
+        password: 'Password'
+        password_confirmation: 'Password confirmation'
   enum:
     user:
       sex:
-        male: "male"
-        female: "female"
+        male: 'Male'
+        female: 'Female'
+      religion:
+        christ: 'Christ'
+        buddhism: 'Buddhism'
+        islam: 'Islam'
+        hindu: 'Hindu'
+        shinto: 'Shinto'
+        taoism: 'Taoism'
+        newage: 'Newage'
+        secular: 'Secular'
+        other_religion: 'Other'
