@@ -9,20 +9,37 @@ class AddEtcToUser < ActiveRecord::Migration[6.0]
     add_column :users, :sex, :tinyint, null: false
     add_column :users, :birthday, :date
     add_column :users, :tel, :string, limit: 16
+    add_column :users, :mobile, :string, limit: 16
     add_column :users, :fax, :string, limit: 16
-    add_column :users, :lang, :smallint
+    add_column :users, :lang, :tinyint, unsigned: true
     add_column :users, :country, :smallint
-    add_column :users, :zip, :integer
+    add_column :users, :zip, :string, limit: 10
     add_column :users, :prefecture, :smallint
     add_column :users, :city, :string, limit: 64
     add_column :users, :house_number, :string, limit: 64
     add_column :users, :religion, :tinyint
-    add_column :users, :sect, :tinyint
-    add_column :users, :sect_name, :string, limit: 64
+    add_column :users, :sect, :string, limit: 64
+    add_column :users, :church, :string, limit: 64
+    add_column :users, :baptized, :boolean
+    add_column :users, :baptized_year, :smallint
     add_column :users, :bio, :string
     add_column :users, :courtship, :boolean, null: false, default: false
     add_column :users, :matchmaker, :boolean, null: false, default: false
     add_column :users, :admin, :boolean, null: false, default: false
-    add_column :users, :gene_partner, :string, limit: 10
+    add_column :users, :gene_partner_id, :string, limit: 10
+    add_column :users, :income, :integer
+    add_column :users, :drinking, :tinyint
+    add_column :users, :smoking, :tinyint
+    add_column :users, :weight, :tinyint, unsigned: true
+    add_column :users, :height, :tinyint, unsigned: true
+    add_column :users, :job, :string, limit: 64
+    add_column :users, :education, :string, limit: 64
+    add_column :users, :hobby, :string, limit: 64
+    add_column :users, :blood, :tinyint
+    add_column :users, :marital_status, :tinyint
+    add_column :users, :married, :boolean
+    add_column :users, :diseased, :boolean
+    add_column :users, :disease_name, :string, limit: 64
+    add_column :users, :remark, :text
   end
 end

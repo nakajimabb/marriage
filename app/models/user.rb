@@ -2,9 +2,13 @@
 
 class User < ActiveRecord::Base
   REGISTRABLE_ATTRIBUTES = %i(nickname email first_name last_name first_name_kana last_name_kana
-                              first_name_en last_name_en sex birthday tel fax lang country zip prefecture city house_number
-                              religion sect sect_name bio courtship matchmaker gene_partner
-                              avatar password password_confirmation)
+                              first_name_en last_name_en sex birthday tel fax mobile
+                              lang country zip prefecture city house_number
+                              religion sect church baptized baptized_year
+                              courtship matchmaker marital_status married bio remark
+                              income drinking smoking weight height job education hobby blood
+                              diseased disease_name gene_partner_id
+                              password password_confirmation avatar)
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -17,12 +21,18 @@ class User < ActiveRecord::Base
 
   enum sex: {male: 1, female: 2}
   enum religion: {christ: 1, buddhism: 2, islam: 3, hindu: 4, shinto: 5, taoism: 6, newage:7, secular: 8, other_religion: 10}
+  enum blood: {type_a: 1, type_b: 2, type_o: 3, type_ab: 4}
   enum lang: {en: 41, ja: 73}
+  enum drinking: {dont_drink: 1, do_drink: 2}
+  enum smoking: {dont_smoke: 1, do_smoke: 2}
+  enum marital_status: { first_marriage: 1, second_marriage: 2 }
   enum country: Country::CODES
   enum prefecture: Prefecture::CODES
 
   validates :email, presence: true, uniqueness: true
   validates :sex, presence: true
+  validates :height, numericality: { only_integer: true, greater_than: 0, less_than: 256 }, allow_blank: true
+  validates :weight, numericality: { only_integer: true, greater_than: 0, less_than: 256 }, allow_blank: true
 
   def avatar_url
     avatar.attached? ?  url_for(avatar) : nil

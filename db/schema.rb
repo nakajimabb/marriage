@@ -67,21 +67,38 @@ ActiveRecord::Schema.define(version: 2019_10_02_100459) do
     t.integer "sex", limit: 1, null: false
     t.date "birthday"
     t.string "tel", limit: 16
+    t.string "mobile", limit: 16
     t.string "fax", limit: 16
-    t.integer "lang", limit: 2
+    t.integer "lang", limit: 1, unsigned: true
     t.integer "country", limit: 2
-    t.integer "zip"
+    t.string "zip", limit: 10
     t.integer "prefecture", limit: 2
     t.string "city", limit: 64
     t.string "house_number", limit: 64
     t.integer "religion", limit: 1
-    t.integer "sect", limit: 1
-    t.string "sect_name", limit: 64
+    t.string "sect", limit: 64
+    t.string "church", limit: 64
+    t.boolean "baptized"
+    t.integer "baptized_year", limit: 2
     t.string "bio"
     t.boolean "courtship", default: false, null: false
     t.boolean "matchmaker", default: false, null: false
     t.boolean "admin", default: false, null: false
-    t.string "gene_partner", limit: 10
+    t.string "gene_partner_id", limit: 10
+    t.integer "income"
+    t.integer "drinking", limit: 1
+    t.integer "smoking", limit: 1
+    t.integer "weight", limit: 1, unsigned: true
+    t.integer "height", limit: 1, unsigned: true
+    t.string "job", limit: 64
+    t.string "education", limit: 64
+    t.string "hobby", limit: 64
+    t.integer "blood", limit: 1
+    t.integer "marital_status", limit: 1
+    t.boolean "married"
+    t.boolean "diseased"
+    t.string "disease_name", limit: 64
+    t.text "remark"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
