@@ -1,0 +1,11 @@
+en:
+  views:
+    app:
+      cancel: 'Cancel'
+      close: 'Close'
+      create: 'Create'
+      exact: 'exact'
+      save: 'Save'
+      search: 'Search'
+      admin_tools: 'admin tools'
+      update: 'Update'

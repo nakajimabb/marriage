@@ -1,0 +1,11 @@
+ja:
+  views:
+    app:
+      cancel: 'キャンセル'
+      close: '閉じる'
+      create: '登録する'
+      exact: '完全一致'
+      save: '保存する'
+      search: '検索する'
+      admin_tools: '管理者ツール'
+      update: '更新する'
