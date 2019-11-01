@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
                               first_name_en last_name_en sex birthday tel fax mobile
                               lang country zip prefecture city house_number
                               religion sect church baptized baptized_year
-                              courtship matchmaker marital_status married bio remark
+                              role_courtship role_matchmaker marital_status married bio remark
                               income drinking smoking weight height job education hobby blood
                               diseased disease_name gene_partner_id
                               password password_confirmation avatar)
@@ -18,6 +18,9 @@ class User < ActiveRecord::Base
   include Rails.application.routes.url_helpers
 
   has_one_attached :avatar
+  belongs_to :matchmaker, class_name: 'User', foreign_key: :matchmaker_id, optional: true
+  belongs_to :created_by, class_name: 'User', foreign_key: :created_by_id, optional: true
+  belongs_to :updated_by, class_name: 'User', foreign_key: :updated_by_id, optional: true
 
   enum sex: {male: 1, female: 2}
   enum religion: {christ: 1, buddhism: 2, islam: 3, hindu: 4, shinto: 5, taoism: 6, newage:7, secular: 8, other_religion: 10}

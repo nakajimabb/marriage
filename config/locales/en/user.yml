@@ -30,8 +30,9 @@ en:
         avatar: 'Avatar'
         religion: 'Religion'
         sect: 'Sect'
-        courtship: 'Courtship'
-        matchmaker: 'Matchmaker'
+        role_courtship: 'search for Partner'
+        role_matchmaker: 'act as Matchmaker'
+        matchmaker_id: 'Matchmaker'
         gene_partner_id: 'GenePartnerID'
         remark: 'self Introduction'
         job: 'Job'
@@ -92,3 +93,6 @@ en:
       physical: 'Physical info'
       profile: 'Profile'
       list: "User's list"
+      courtship_menu: 'Courtship menu'
+      matchmaker_menu: 'Matchmaker menu'
+      head_menu: 'Head menu'

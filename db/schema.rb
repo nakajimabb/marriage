@@ -81,9 +81,9 @@ ActiveRecord::Schema.define(version: 2019_10_02_100459) do
     t.boolean "baptized"
     t.integer "baptized_year", limit: 2
     t.string "bio"
-    t.boolean "courtship", default: false, null: false
-    t.boolean "matchmaker", default: false, null: false
-    t.boolean "admin", default: false, null: false
+    t.boolean "role_courtship", default: false, null: false
+    t.boolean "role_matchmaker", default: false, null: false
+    t.boolean "role_head", default: false, null: false
     t.string "gene_partner_id", limit: 10
     t.integer "income"
     t.integer "drinking", limit: 1
@@ -99,11 +99,20 @@ ActiveRecord::Schema.define(version: 2019_10_02_100459) do
     t.boolean "diseased"
     t.string "disease_name", limit: 64
     t.text "remark"
+    t.bigint "matchmaker_id"
+    t.bigint "created_by_id"
+    t.bigint "updated_by_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.index ["created_by_id"], name: "index_users_on_created_by_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["matchmaker_id"], name: "index_users_on_matchmaker_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
+    t.index ["updated_by_id"], name: "index_users_on_updated_by_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "users", "users", column: "created_by_id"
+  add_foreign_key "users", "users", column: "matchmaker_id"
+  add_foreign_key "users", "users", column: "updated_by_id"
 end

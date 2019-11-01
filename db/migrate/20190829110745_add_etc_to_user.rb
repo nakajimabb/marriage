@@ -23,9 +23,9 @@ class AddEtcToUser < ActiveRecord::Migration[6.0]
     add_column :users, :baptized, :boolean
     add_column :users, :baptized_year, :smallint
     add_column :users, :bio, :string
-    add_column :users, :courtship, :boolean, null: false, default: false
-    add_column :users, :matchmaker, :boolean, null: false, default: false
-    add_column :users, :admin, :boolean, null: false, default: false
+    add_column :users, :role_courtship, :boolean, null: false, default: false
+    add_column :users, :role_matchmaker, :boolean, null: false, default: false
+    add_column :users, :role_head, :boolean, null: false, default: false
     add_column :users, :gene_partner_id, :string, limit: 10
     add_column :users, :income, :integer
     add_column :users, :drinking, :tinyint
@@ -41,5 +41,8 @@ class AddEtcToUser < ActiveRecord::Migration[6.0]
     add_column :users, :diseased, :boolean
     add_column :users, :disease_name, :string, limit: 64
     add_column :users, :remark, :text
+    add_reference :users, :matchmaker, foreign_key: { to_table: :users }
+    add_reference :users, :created_by, foreign_key: { to_table: :users }
+    add_reference :users, :updated_by, foreign_key: { to_table: :users }
   end
 end
