@@ -17,6 +17,7 @@ ja:
         first_name_en: 'first name'
         last_name_en: 'last name'
         birthday: '誕生日'
+        age: '年齢'
         tel: '電話番号'
         mobile: '携帯電話'
         fax: 'FAX番号'
@@ -92,7 +93,8 @@ ja:
       religion: '宗教'
       physical: '健康'
       profile: 'プロフィール'
-      list: "会員一覧"
+      list: "ユーザ一覧"
+      courtships: '会員一覧'
       courtship_menu: '婚活メニュー'
       matchmaker_menu: '仲人メニュー'
       head_menu: '本部メニュー'

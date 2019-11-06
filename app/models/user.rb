@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
                               income drinking smoking weight height job education hobby blood
                               diseased disease_name gene_partner_id
                               password password_confirmation avatar)
+  LIST_ATTRIBUTES = %i(id nickname first_name last_name sex age religion prefecture bio avatar_url)
+  PUBLIC_ATTRIBUTES = %i(nickname sex age religion prefecture bio avatar_url)
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -21,6 +23,7 @@ class User < ActiveRecord::Base
   belongs_to :matchmaker, class_name: 'User', foreign_key: :matchmaker_id, optional: true
   belongs_to :created_by, class_name: 'User', foreign_key: :created_by_id, optional: true
   belongs_to :updated_by, class_name: 'User', foreign_key: :updated_by_id, optional: true
+  has_many :courtships, dependent: :nullify, class_name: 'User', foreign_key: :matchmaker_id
 
   enum sex: {male: 1, female: 2}
   enum religion: {christ: 1, buddhism: 2, islam: 3, hindu: 4, shinto: 5, taoism: 6, newage:7, secular: 8, other_religion: 10}
@@ -39,5 +42,9 @@ class User < ActiveRecord::Base
 
   def avatar_url
     avatar.attached? ?  url_for(avatar) : nil
+  end
+
+  def age
+    (Date.today.strftime('%Y%m%d').to_i - birthday.strftime('%Y%m%d').to_i) / 10000 if birthday
   end
 end

@@ -1,6 +1,7 @@
 ja:
   views:
     app:
+      age_year: '歳'
       cancel: 'キャンセル'
       close: '閉じる'
       create: '登録する'

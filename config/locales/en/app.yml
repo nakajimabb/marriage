@@ -1,6 +1,7 @@
 en:
   views:
     app:
+      age_year: 'years old'
       cancel: 'Cancel'
       close: 'Close'
       create: 'Create'

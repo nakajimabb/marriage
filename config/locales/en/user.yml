@@ -17,6 +17,7 @@ en:
         first_name_en: 'First name'
         last_name_en: 'Last name'
         birthday: 'Birthday'
+        age: 'Age'
         tel: 'Tel'
         mobile: 'Mobile'
         fax: 'Fax'
@@ -93,6 +94,7 @@ en:
       physical: 'Physical info'
       profile: 'Profile'
       list: "User's list"
+      courtships: 'Courtships'
       courtship_menu: 'Courtship menu'
       matchmaker_menu: 'Matchmaker menu'
       head_menu: 'Head menu'
