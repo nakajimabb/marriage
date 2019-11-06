@@ -37,7 +37,6 @@ class AddEtcToUser < ActiveRecord::Migration[6.0]
     add_column :users, :hobby, :string, limit: 64
     add_column :users, :blood, :tinyint
     add_column :users, :marital_status, :tinyint
-    add_column :users, :married, :boolean
     add_column :users, :diseased, :boolean
     add_column :users, :disease_name, :string, limit: 64
     add_column :users, :remark, :text

@@ -95,7 +95,6 @@ ActiveRecord::Schema.define(version: 2019_10_02_100459) do
     t.string "hobby", limit: 64
     t.integer "blood", limit: 1
     t.integer "marital_status", limit: 1
-    t.boolean "married"
     t.boolean "diseased"
     t.string "disease_name", limit: 64
     t.text "remark"

@@ -1,17 +1,6 @@
 # frozen_string_literal: true
 
 class User < ActiveRecord::Base
-  REGISTRABLE_ATTRIBUTES = %i(nickname email first_name last_name first_name_kana last_name_kana
-                              first_name_en last_name_en sex birthday tel fax mobile
-                              lang country zip prefecture city house_number
-                              religion sect church baptized baptized_year
-                              role_courtship role_matchmaker marital_status married bio remark
-                              income drinking smoking weight height job education hobby blood
-                              diseased disease_name gene_partner_id
-                              password password_confirmation avatar)
-  LIST_ATTRIBUTES = %i(id nickname first_name last_name sex age religion prefecture bio avatar_url)
-  PUBLIC_ATTRIBUTES = %i(nickname sex age religion prefecture bio avatar_url)
-
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -31,7 +20,7 @@ class User < ActiveRecord::Base
   enum lang: {en: 41, ja: 73}
   enum drinking: {dont_drink: 1, do_drink: 2}
   enum smoking: {dont_smoke: 1, do_smoke: 2}
-  enum marital_status: { first_marriage: 1, second_marriage: 2 }
+  enum marital_status: { first_marriage: 1, second_marriage: 2, married: 5 }
   enum country: Country::CODES
   enum prefecture: Prefecture::CODES
 
@@ -40,8 +29,41 @@ class User < ActiveRecord::Base
   validates :height, numericality: { only_integer: true, greater_than: 0, less_than: 256 }, allow_blank: true
   validates :weight, numericality: { only_integer: true, greater_than: 0, less_than: 256 }, allow_blank: true
 
+  def registrable_attributes(user)
+    if role_head? || (role_matchmaker? && (user.nil? || user.matchmaker_id == self.id))
+      attrs = %i(nickname email first_name last_name first_name_kana last_name_kana
+                first_name_en last_name_en sex birthday tel fax mobile
+                lang country zip prefecture city house_number
+                religion sect church baptized baptized_year
+                role_courtship marital_status bio remark
+                income drinking smoking weight height job education hobby blood
+                diseased disease_name password password_confirmation avatar)
+      if role_head?
+        attrs += %i(role_matchmaker matchmaker_id gene_partner_id)
+      end
+    elsif user.id == self.id
+      attrs = %i(lang bio remark job hobby password password_confirmation avatar)
+    else
+      attrs = []
+    end
+    attrs
+  end
+
+  def list_attributes
+    if role_head? || role_matchmaker?
+      attrs = %i(id nickname first_name last_name sex age religion prefecture bio avatar_url)
+    else
+      attrs = %i(nickname sex age religion prefecture bio avatar_url)
+    end
+    attrs
+  end
+
   def avatar_url
     avatar.attached? ?  url_for(avatar) : nil
+  end
+
+  def full_name
+    [last_name, first_name].compact.join(' ')
   end
 
   def age
