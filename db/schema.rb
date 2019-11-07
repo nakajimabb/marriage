@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(version: 2019_10_02_100459) do
     t.boolean "diseased"
     t.string "disease_name", limit: 64
     t.text "remark"
+    t.integer "member_sharing", limit: 1
     t.bigint "matchmaker_id"
     t.bigint "created_by_id"
     t.bigint "updated_by_id"

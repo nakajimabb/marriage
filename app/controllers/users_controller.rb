@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-  def courtships
+  def members
     if current_user&.role_matchmaker?
       attrs = current_user.list_attributes
-      users = current_user.courtships.map{ |user| attrs.map { |c| [c, user.try(c)] }.to_h }
+      users = current_user.members.map{ |user| attrs.map { |c| [c, user.try(c)] }.to_h }
       render json: {users: users}
     end
   end

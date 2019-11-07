@@ -51,6 +51,7 @@ ja:
         drinking: '飲酒'
         smoking: '喫煙'
         marital_status: '結婚歴'
+        member_sharing: 'メンバー共有'
         password: 'パスワード'
         password_confirmation: 'パスワード（確認用）'
   enum:
@@ -83,18 +84,20 @@ ja:
         first_marriage: '初婚'
         second_marriage: '再婚'
         married: '既婚'
+      member_sharing:
+        member_public: '公開'
+        shared_friend: '友人のみ共有'
   views:
     user:
       basic: '基本情報'
       comment: 'コメント'
       location: '住所・電話'
-      members: '会員情報'
+      members: 'メンバー管理'
       misc: 'その他'
       religion: '宗教'
       physical: '健康'
       profile: 'プロフィール'
       list: "ユーザ一覧"
-      courtships: '婚活者一覧'
       courtship_menu: '婚活メニュー'
       matchmaker_menu: '仲人メニュー'
       head_menu: '本部メニュー'

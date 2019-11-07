@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   belongs_to :matchmaker, class_name: 'User', foreign_key: :matchmaker_id, optional: true
   belongs_to :created_by, class_name: 'User', foreign_key: :created_by_id, optional: true
   belongs_to :updated_by, class_name: 'User', foreign_key: :updated_by_id, optional: true
-  has_many :courtships, dependent: :nullify, class_name: 'User', foreign_key: :matchmaker_id
+  has_many :members, dependent: :nullify, class_name: 'User', foreign_key: :matchmaker_id
 
   enum sex: {male: 1, female: 2}
   enum religion: {christ: 1, buddhism: 2, islam: 3, hindu: 4, shinto: 5, taoism: 6, newage:7, secular: 8, other_religion: 10}
@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
   enum drinking: {dont_drink: 1, do_drink: 2}
   enum smoking: {dont_smoke: 1, do_smoke: 2}
   enum marital_status: { first_marriage: 1, second_marriage: 2, married: 5 }
+  enum member_sharing: { member_public: 1, shared_friend: 2 }
   enum country: Country::CODES
   enum prefecture: Prefecture::CODES
 
@@ -35,7 +36,7 @@ class User < ActiveRecord::Base
                 first_name_en last_name_en sex birthday tel fax mobile
                 lang country zip prefecture city house_number
                 religion sect church baptized baptized_year
-                role_courtship marital_status bio remark
+                role_courtship marital_status bio remark member_sharing
                 income drinking smoking weight height job education hobby blood
                 diseased disease_name password password_confirmation avatar)
       if role_head?
@@ -51,9 +52,11 @@ class User < ActiveRecord::Base
 
   def list_attributes
     if role_head? || role_matchmaker?
-      attrs = %i(id nickname first_name last_name first_name_kana last_name_kana sex age religion prefecture bio avatar_url)
+      attrs = %i(id nickname first_name last_name first_name_kana last_name_kana
+                sex age religion prefecture role_courtship role_matchmaker bio avatar_url)
     else
-      attrs = %i(nickname sex age religion prefecture bio avatar_url)
+      attrs = %i(nickname sex age religion prefecture bio role_courtship
+                role_courtship role_matchmaker avatar_url)
     end
     attrs
   end

@@ -51,6 +51,7 @@ en:
         drinking: 'Drinking'
         smoking: 'Smoking'
         marital_status: 'Marital history'
+        member_sharing: 'member Sharing'
         password: 'Password'
         password_confirmation: 'Password confirmation'
   enum:
@@ -83,18 +84,20 @@ en:
         first_marriage: 'first Marriage'
         second_marriage: 'second Marriage'
         married: 'Married'
+      member_sharing:
+        member_public: 'Public'
+        shared_friend: 'only Friend'
   views:
     user:
       basic: 'Basic'
       comment: 'Comment'
       location: 'Location'
-      members: "Member's info"
+      members: "Members"
       misc: 'Miscellaneous'
       religion: 'Religion'
       physical: 'Physical info'
       profile: 'Profile'
       list: "User's list"
-      courtships: 'Courtships'
       courtship_menu: 'Courtship menu'
       matchmaker_menu: 'Matchmaker menu'
       head_menu: 'Head menu'
