@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
 
   def list_attributes
     if role_head? || role_matchmaker?
-      attrs = %i(id nickname first_name last_name sex age religion prefecture bio avatar_url)
+      attrs = %i(id nickname first_name last_name first_name_kana last_name_kana sex age religion prefecture bio avatar_url)
     else
       attrs = %i(nickname sex age religion prefecture bio avatar_url)
     end

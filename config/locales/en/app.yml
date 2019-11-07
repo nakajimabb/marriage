@@ -9,3 +9,4 @@ en:
       save: 'Save'
       search: 'Search'
       update: 'Update'
+      rows_per_page: 'number of page'
