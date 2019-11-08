@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   scope :api do
     get 'users/members'
+    get 'users/matchmakers'
+    get 'users/viewable'
     resources :users, :only => [:index, :show, :edit, :create, :update]
   end
 end

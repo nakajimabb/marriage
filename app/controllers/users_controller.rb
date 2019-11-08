@@ -1,16 +1,45 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update]
 
   def members
-    if current_user&.role_matchmaker?
+    if current_user.role_matchmaker?
       attrs = current_user.list_attributes
       users = current_user.members.map{ |user| attrs.map { |c| [c, user.try(c)] }.to_h }
       render json: {users: users}
+    else
+      render status: 401
+    end
+  end
+
+  def matchmakers
+    if current_user.role_matchmaker?
+      attrs = current_user.list_attributes
+      friend_ids = current_user.user_friends.pluck(:companion_id)
+      users = User.where(role_matchmaker: true)
+                  .map{ |user| (attrs.map { |c| [c, user.try(c)] } + [[:friend, friend_ids.include?(user.id)]]).to_h }
+      render json: {users: users}
+    else
+      render status: 401
+    end
+  end
+
+  def viewable
+    if current_user.role_matchmaker?
+      attrs = current_user.public_attributes
+      matchmaker_ids = User.where(role_matchmaker: true, member_sharing: :member_public).pluck(:id)
+      matchmaker_ids += current_user.user_friends.pluck(:companion_id)
+      matchmaker_ids.delete(current_user.id)
+      matchmaker_ids.uniq!
+      users = User.where(role_courtship: true, matchmaker_id: matchmaker_ids)
+      users = users.map{ |user| attrs.map { |c| [c, user.try(c)] }.to_h }
+      render json: {users: users}
+    else
+      render status: 401
     end
   end
 
   def index
-    if current_user&.role_head?
+    if current_user.role_head?
       attrs = current_user.list_attributes
       users = User.all.map{ |user| attrs.map { |c| [c, user.try(c)] }.to_h }
       render json: {users: users}
@@ -26,7 +55,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    if current_user&.role_head? || current_user&.role_matchmaker?
+    if current_user.role_head? || current_user.role_matchmaker?
       @user = User.new(user_params(nil))
       @user.created_by_id = @user.updated_by_id = @user.matchmaker_id = current_user.id
       if @user.save
@@ -40,7 +69,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    if current_user&.role_head? || current_user&.id == @user.matchmaker_id
+    if current_user.role_head? || current_user.id == @user.matchmaker_id
       user = @user.attributes
       user[:avatar_url] = @user.avatar_url
       matchmakers = User.where(role_matchmaker: true)
@@ -52,7 +81,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if current_user&.role_head? || current_user&.id == @user.matchmaker_id
+    if current_user.role_head? || current_user.id == @user.matchmaker_id
       p = user_params(@user)
       if p[:password].blank? && p[:password_confirmation].blank?
         p.delete(:password)

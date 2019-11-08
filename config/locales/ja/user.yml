@@ -101,3 +101,7 @@ ja:
       courtship_menu: '婚活メニュー'
       matchmaker_menu: '仲人メニュー'
       head_menu: '本部メニュー'
+      viewable: '会員一覧'
+      matchmakers: '仲人一覧'
+      matchmaker_friend: '友達の仲人'
+      matchmaker_public: 'メンバー公開している仲人'

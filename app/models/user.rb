@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
   belongs_to :created_by, class_name: 'User', foreign_key: :created_by_id, optional: true
   belongs_to :updated_by, class_name: 'User', foreign_key: :updated_by_id, optional: true
   has_many :members, dependent: :nullify, class_name: 'User', foreign_key: :matchmaker_id
+  has_many :user_friends, dependent: :destroy
+  has_many :friends, through: :user_friends, source: :companion
 
   enum sex: {male: 1, female: 2}
   enum religion: {christ: 1, buddhism: 2, islam: 3, hindu: 4, shinto: 5, taoism: 6, newage:7, secular: 8, other_religion: 10}
@@ -52,13 +54,18 @@ class User < ActiveRecord::Base
 
   def list_attributes
     if role_head? || role_matchmaker?
-      attrs = %i(id nickname first_name last_name first_name_kana last_name_kana
+      attrs = %i(id nickname first_name last_name first_name_kana last_name_kana member_sharing
                 sex age religion prefecture role_courtship role_matchmaker bio avatar_url)
     else
       attrs = %i(nickname sex age religion prefecture bio role_courtship
                 role_courtship role_matchmaker avatar_url)
     end
     attrs
+  end
+
+  def public_attributes
+    %i(nickname id sex age religion prefecture bio role_courtship
+      role_courtship role_matchmaker avatar_url)
   end
 
   def avatar_url

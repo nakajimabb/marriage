@@ -101,3 +101,7 @@ en:
       courtship_menu: 'Courtship menu'
       matchmaker_menu: 'Matchmaker menu'
       head_menu: 'Head menu'
+      viewable: "User's list"
+      matchmakers: 'Matchmakers'
+      matchmaker_friend: 'Friends of matchmaker'
+      matchmaker_public: 'Matchmakers sharing members'
