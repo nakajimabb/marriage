@@ -49,7 +49,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    attrs = current_user.list_attributes
+    attrs = current_user.public_attributes
     user = attrs.map { |c| [c, @user.try(c)] }.to_h
     render json: {user: user}
   end

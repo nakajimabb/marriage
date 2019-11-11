@@ -64,7 +64,10 @@ class User < ActiveRecord::Base
   end
 
   def public_attributes
-    %i(nickname id sex age religion prefecture bio role_courtship
+    %i(nickname id sex age prefecture bio role_courtship
+      blood weight height drinking smoking diseased disease_name
+      religion sect church baptized baptized_year
+      job education income hobby bio remark
       role_courtship role_matchmaker avatar_url)
   end
 

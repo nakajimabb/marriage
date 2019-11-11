@@ -10,3 +10,4 @@ en:
       search: 'Search'
       update: 'Update'
       rows_per_page: 'number of page'
+      list: 'List'
