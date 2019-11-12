@@ -1,11 +1,13 @@
 ja:
   views:
     app:
+      add: '追加する'
       age_year: '歳'
       cancel: 'キャンセル'
       close: '閉じる'
       create: '登録する'
       exact: '完全一致'
+      edit: '編集する'
       save: '保存する'
       search: '検索する'
       update: '更新する'

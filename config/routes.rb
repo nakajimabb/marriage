@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     get 'users/members'
     get 'users/matchmakers'
     get 'users/viewable'
+    get 'users/:id/get', to: 'users#get'
     resources :users, :only => [:index, :show, :edit, :create, :update]
   end
 end

@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update]
+  before_action :set_user, only: [:show, :edit, :update, :get]
 
   def members
     if current_user.role_matchmaker?
@@ -51,6 +51,18 @@ class UsersController < ApplicationController
   def show
     attrs = current_user.public_attributes
     user = attrs.map { |c| [c, @user.try(c)] }.to_h
+    render json: {user: user}
+  end
+
+  def get
+    if current_user.role_head? || (current_user.role_matchmaker? && current_user.id == @user.matchmaker_id)
+      user = @user.attributes
+      user[:age] = @user.age
+      user[:avatar_url] = @user.avatar_url
+    else
+      attrs = current_user.public_attributes
+      user = attrs.map { |c| [c, @user.try(c)] }.to_h
+    end
     render json: {user: user}
   end
 

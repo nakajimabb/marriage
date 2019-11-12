@@ -67,7 +67,7 @@ class User < ActiveRecord::Base
     %i(nickname id sex age prefecture bio role_courtship
       blood weight height drinking smoking diseased disease_name
       religion sect church baptized baptized_year
-      job education income hobby bio remark
+      job education income hobby bio remark marital_status
       role_courtship role_matchmaker avatar_url)
   end
 

@@ -1,11 +1,13 @@
 en:
   views:
     app:
+      add: 'Add'
       age_year: 'years old'
       cancel: 'Cancel'
       close: 'Close'
       create: 'Create'
       exact: 'exact'
+      edit: '編集'
       save: 'Save'
       search: 'Search'
       update: 'Update'
