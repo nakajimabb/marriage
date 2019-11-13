@@ -68,7 +68,7 @@ class User < ActiveRecord::Base
       blood weight height drinking smoking diseased disease_name
       religion sect church baptized baptized_year
       job education income hobby bio remark marital_status
-      role_courtship role_matchmaker avatar_url)
+      role_courtship role_matchmaker courtships_size avatar_url)
   end
 
   def avatar_url
@@ -83,9 +83,18 @@ class User < ActiveRecord::Base
     (Date.today.strftime('%Y%m%d').to_i - birthday.strftime('%Y%m%d').to_i) / 10000 if birthday
   end
 
+  def courtships
+    members.where(role_courtship: true)
+  end
+
+  def courtships_size
+    courtships.size
+  end
+
   # method overwrite => add avatar_url
   def token_validation_response
     response = super
+    response[:courtships_size] = self.courtships_size
     response[:avatar_url] = self.avatar_url
     response
   end

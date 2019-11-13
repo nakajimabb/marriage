@@ -83,6 +83,7 @@ class UsersController < ApplicationController
   def edit
     if current_user.role_head? || current_user.id == @user.matchmaker_id
       user = @user.attributes
+      user[:courtships_size] = @user.courtships_size
       user[:avatar_url] = @user.avatar_url
       matchmakers = User.where(role_matchmaker: true)
       matchmakers = matchmakers.map{ |user| [:id, :full_name].map { |c| [c, user.try(c)] }.to_h }
