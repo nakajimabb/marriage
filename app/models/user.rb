@@ -82,4 +82,11 @@ class User < ActiveRecord::Base
   def age
     (Date.today.strftime('%Y%m%d').to_i - birthday.strftime('%Y%m%d').to_i) / 10000 if birthday
   end
+
+  # method overwrite => add avatar_url
+  def token_validation_response
+    response = super
+    response[:avatar_url] = self.avatar_url
+    response
+  end
 end
