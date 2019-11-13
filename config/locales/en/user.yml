@@ -114,3 +114,5 @@ en:
       public_profile: 'public Profile'
       add_user: 'Add member'
       page_of: "'s Page"
+      edit_self: 'Setting'
+      address: 'Address'

@@ -112,6 +112,19 @@ class UsersController < ApplicationController
     end
   end
 
+  def update_self
+    p = user_params(current_user)
+    if p[:password].blank? && p[:password_confirmation].blank?
+      p.delete(:password)
+      p.delete(:password_confirmation)
+    end
+    if current_user.update(p)
+      render status: 200, json: {user: current_user}
+    else
+      render status: 500, json: {errors: current_user.errors}
+    end
+  end
+
 private
 
   def set_user

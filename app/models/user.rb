@@ -45,7 +45,7 @@ class User < ActiveRecord::Base
         attrs += %i(role_matchmaker matchmaker_id gene_partner_id)
       end
     elsif user.id == self.id
-      attrs = %i(lang bio remark job hobby password password_confirmation avatar)
+      attrs = %i(lang bio remark password password_confirmation)
     else
       attrs = []
     end

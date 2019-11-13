@@ -13,3 +13,4 @@ en:
       update: 'Update'
       rows_per_page: 'number of page'
       list: 'List'
+      save_done: 'successfully saved!'
