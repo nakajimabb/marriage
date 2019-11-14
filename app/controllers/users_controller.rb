@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   def matchmakers
     if current_user.role_matchmaker?
       attrs = current_user.list_attributes
-      friend_ids = current_user.user_friends.pluck(:companion_id)
+      friend_ids = current_user.user_friends.where(status: :accepted).pluck(:companion_id)
       users = User.where(role_matchmaker: true)
                   .map{ |user| (attrs.map { |c| [c, user.try(c)] } + [[:friend, friend_ids.include?(user.id)]]).to_h }
       render json: {users: users}
@@ -51,7 +51,7 @@ class UsersController < ApplicationController
   def show
     attrs = current_user.public_attributes
     user = attrs.map { |c| [c, @user.try(c)] }.to_h
-    render json: {user: user}
+    render json: {user: user, user_friend: current_user.user_friend(@user)}
   end
 
   def get
@@ -63,7 +63,7 @@ class UsersController < ApplicationController
       attrs = current_user.public_attributes
       user = attrs.map { |c| [c, @user.try(c)] }.to_h
     end
-    render json: {user: user}
+    render json: {user: user, user_friend: current_user.user_friend(@user)}
   end
 
   def create
@@ -87,7 +87,7 @@ class UsersController < ApplicationController
       user[:avatar_url] = @user.avatar_url
       matchmakers = User.where(role_matchmaker: true)
       matchmakers = matchmakers.map{ |user| [:id, :full_name].map { |c| [c, user.try(c)] }.to_h }
-      render json: {user: user, matchmakers: matchmakers}
+      render json: {user: user, matchmakers: matchmakers, user_friend: current_user.user_friend(@user)}
     else
       render status: 401
     end

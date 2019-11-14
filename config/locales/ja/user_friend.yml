@@ -1,0 +1,20 @@
+ja:
+  activerecord:
+    models:
+      user_friend: '会員共有'
+  enum:
+    user_friend:
+      status:
+        waiting: '承認待ち'
+        accepted: '承認済'
+        rejected: '拒否'
+        pending: '保留'
+  views:
+    user_friend:
+      notify: "{{name}}より共有申請が届いています。"
+      accept: '承認'
+      reject: '拒否'
+      pending: '保留'
+      not_exist: 'お知らせはありません。'
+      friend: 'メンバー共有'
+      sent: '共有リクエスト送信済'

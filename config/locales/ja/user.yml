@@ -51,7 +51,7 @@ ja:
         drinking: '飲酒'
         smoking: '喫煙'
         marital_status: '結婚歴'
-        member_sharing: '会員共有'
+        member_sharing: '共有設定'
         courtships_size: '会員数'
         password: 'パスワード'
         password_confirmation: 'パスワード（確認用）'
@@ -118,3 +118,4 @@ ja:
       page_of: 'さんのページ'
       edit_self: '設定'
       address: '住所'
+      request_sharing: '会員共有のリクエストを送る'

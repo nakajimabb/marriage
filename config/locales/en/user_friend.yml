@@ -1,0 +1,20 @@
+en:
+  activerecord:
+    models:
+      user_friend: 'Sharing members'
+  enum:
+    user_friend:
+      status:
+        waiting: 'Waiting'
+        accepted: 'Accepted'
+        rejected: 'Rejected'
+        pending: 'Pending'
+  views:
+    user_friend:
+      notify: "Members' sharing was requested from {{name}}."
+      accept: 'Accept'
+      reject: 'Reject'
+      pending: 'Pending'
+      not_exist: 'not Exists.'
+      friend: 'members share'
+      sent: 'Request was sent'

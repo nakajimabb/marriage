@@ -68,7 +68,8 @@ class User < ActiveRecord::Base
       blood weight height drinking smoking diseased disease_name
       religion sect church baptized baptized_year
       job education income hobby bio remark marital_status
-      role_courtship role_matchmaker courtships_size avatar_url)
+      role_courtship role_matchmaker
+      courtships_size member_sharing avatar_url)
   end
 
   def avatar_url
@@ -91,11 +92,20 @@ class User < ActiveRecord::Base
     courtships.size
   end
 
+  def user_friend(user)
+    if self.role_matchmaker? && user.role_matchmaker?
+      user_friends.find_by(companion_id: user.id)
+    end
+  end
+
   # method overwrite => add avatar_url
   def token_validation_response
     response = super
     response[:courtships_size] = self.courtships_size
     response[:avatar_url] = self.avatar_url
+    if self.role_matchmaker?
+      response[:notification_count] = UserFriend.where(companion_id: self.id, status: :waiting).size
+    end
     response
   end
 end

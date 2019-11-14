@@ -36,10 +36,11 @@ ActiveRecord::Schema.define(version: 2019_11_08_103023) do
   create_table "user_friends", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "companion_id", null: false
-    t.boolean "authorized", default: false, null: false
+    t.integer "status", limit: 1, default: 1, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["companion_id"], name: "index_user_friends_on_companion_id"
+    t.index ["user_id", "companion_id"], name: "index_user_friends_on_user_id_and_companion_id", unique: true
     t.index ["user_id"], name: "index_user_friends_on_user_id"
   end
 
