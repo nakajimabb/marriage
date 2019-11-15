@@ -13,5 +13,8 @@ Rails.application.routes.draw do
     post 'user_friends/request_sharing', to: 'user_friends#request_sharing'
     post 'user_friends/:id/accept_request', to: 'user_friends#accept_request'
     get 'user_friends/waiting_friends'
+
+    get 'requirements/get_by_user_id'
+    resources :requirements, :only => [:create, :update]
   end
 end

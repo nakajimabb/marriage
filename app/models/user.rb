@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   has_many :members, dependent: :nullify, class_name: 'User', foreign_key: :matchmaker_id
   has_many :user_friends, dependent: :destroy
   has_many :friends, through: :user_friends, source: :companion
+  has_one :requirement, dependent: :destroy
 
   enum sex: {male: 1, female: 2}
   enum religion: {christ: 1, buddhism: 2, islam: 3, hindu: 4, shinto: 5, taoism: 6, newage:7, secular: 8, other_religion: 10}

@@ -102,8 +102,7 @@ class UsersController < ApplicationController
       end
       @user.assign_attributes(p)
       @user.updated_by_id = current_user.id if @user.changes.present?
-      @user.save
-      if @user.update(p)
+      if @user.save
         render status: 200, json: {user: @user}
       else
         render status: 500, json: {errors: @user.errors}

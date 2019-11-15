@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_08_103023) do
+ActiveRecord::Schema.define(version: 2019_11_15_005641) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -31,6 +31,30 @@ ActiveRecord::Schema.define(version: 2019_11_08_103023) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "requirements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "min_age", limit: 1, unsigned: true
+    t.integer "max_age", limit: 1, unsigned: true
+    t.boolean "required_age", default: false, null: false
+    t.integer "religion", limit: 1
+    t.boolean "required_religion", default: false, null: false
+    t.integer "marital_status", limit: 1
+    t.boolean "required_marital_status", default: false, null: false
+    t.integer "min_income"
+    t.integer "max_income"
+    t.boolean "required_income", default: false, null: false
+    t.integer "min_height", limit: 1, unsigned: true
+    t.integer "max_height", limit: 1, unsigned: true
+    t.boolean "required_height", default: false, null: false
+    t.bigint "created_by_id", null: false
+    t.bigint "updated_by_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_by_id"], name: "index_requirements_on_created_by_id"
+    t.index ["updated_by_id"], name: "index_requirements_on_updated_by_id"
+    t.index ["user_id"], name: "index_requirements_on_user_id", unique: true
   end
 
   create_table "user_friends", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -123,6 +147,9 @@ ActiveRecord::Schema.define(version: 2019_11_08_103023) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "requirements", "users"
+  add_foreign_key "requirements", "users", column: "created_by_id"
+  add_foreign_key "requirements", "users", column: "updated_by_id"
   add_foreign_key "user_friends", "users"
   add_foreign_key "user_friends", "users", column: "companion_id"
   add_foreign_key "users", "users", column: "created_by_id"

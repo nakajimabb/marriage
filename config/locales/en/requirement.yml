@@ -1,0 +1,21 @@
+en:
+  activerecord:
+    models:
+      requirement: 'Requirement'
+    attributes:
+      requirement:
+        id: 'Id'
+        user_id: 'User'
+        min_age: 'Min age'
+        max_age: 'Max age'
+        required_age: 'Required age'
+        religion: 'Religion'
+        required_religion: 'Required religion'
+        marital_status: 'Marital status'
+        required_marital_status: 'Required marital status'
+        min_income: 'Min income'
+        max_income: 'Max income'
+        required_income: 'Required income'
+        min_height: 'Min height'
+        max_height: 'Max height'
+        required_height: 'Required height'

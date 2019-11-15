@@ -1,0 +1,21 @@
+ja:
+  activerecord:
+    models:
+      requirement: '検索条件'
+    attributes:
+      requirement:
+        id: 'Id'
+        user_id: '会員'
+        min_age: '年齢(下限)'
+        max_age: '年齢(上限)'
+        required_age: '年齢(必須)'
+        religion: '宗教'
+        required_religion: '宗教(必須)'
+        marital_status: '結婚歴'
+        required_marital_status: '結婚歴(必須)'
+        min_income: '年収(下限)'
+        max_income: '年収(上限)'
+        required_income: '年収(必須)'
+        min_height: '身長(下限)'
+        max_height: '身長(上限)'
+        required_height: '身長(必須)'
