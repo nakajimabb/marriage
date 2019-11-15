@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     get 'users/matchmakers'
     get 'users/viewable'
     get 'users/:id/get', to: 'users#get'
+    get 'users/:id/partner_matches', to: 'users#partner_matches'
     patch 'users/update_self', to: 'users#update_self'
     resources :users, :only => [:index, :show, :edit, :create, :update]
 

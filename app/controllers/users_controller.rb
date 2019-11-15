@@ -1,5 +1,16 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :get]
+  before_action :set_user, only: [:show, :edit, :update, :get, :partner_matches]
+
+  def partner_matches
+    if current_user.role_head? || (current_user.role_matchmaker? && @user.matchmaker_id == current_user.id)
+      attrs = current_user.public_attributes
+      users = @user.partner_matches
+      users = users&.map{ |user| attrs.map { |c| [c, user.try(c)] }.to_h }
+      render json: {users: users}
+    else
+      render status: 401
+    end
+  end
 
   def members
     if current_user.role_matchmaker?
@@ -26,11 +37,7 @@ class UsersController < ApplicationController
   def viewable
     if current_user.role_matchmaker?
       attrs = current_user.public_attributes
-      matchmaker_ids = User.where(role_matchmaker: true, member_sharing: :member_public).pluck(:id)
-      matchmaker_ids += current_user.user_friends.pluck(:companion_id)
-      matchmaker_ids.delete(current_user.id)
-      matchmaker_ids.uniq!
-      users = User.where(role_courtship: true, matchmaker_id: matchmaker_ids)
+      users = current_user.viewables
       users = users.map{ |user| attrs.map { |c| [c, user.try(c)] }.to_h }
       render json: {users: users}
     else

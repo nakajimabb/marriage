@@ -99,6 +99,20 @@ class User < ActiveRecord::Base
     end
   end
 
+  def viewables
+    if role_matchmaker?
+      matchmaker_ids = User.where(role_matchmaker: true, member_sharing: :member_public).pluck(:id)
+      matchmaker_ids += user_friends.pluck(:companion_id)
+      matchmaker_ids.delete(self.id)
+      matchmaker_ids.uniq!
+      User.where(role_courtship: true, matchmaker_id: matchmaker_ids)
+    end
+  end
+
+  def partner_matches
+    Requirement.matches(self, self.requirement)
+  end
+
   # method overwrite => add avatar_url
   def token_validation_response
     response = super
