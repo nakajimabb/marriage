@@ -43,3 +43,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # devise関連
 gem 'devise'
 gem 'devise_token_auth'
+gem 'miyabi'
