@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   has_many :members, dependent: :nullify, class_name: 'User', foreign_key: :matchmaker_id
   has_many :user_friends, dependent: :destroy
   has_many :friends, through: :user_friends, source: :companion
+  has_many :eval_partners, dependent: :destroy
   has_one :requirement, dependent: :destroy
 
   enum sex: {male: 1, female: 2}
@@ -69,7 +70,7 @@ class User < ActiveRecord::Base
       blood weight height drinking smoking diseased disease_name
       religion sect church baptized baptized_year
       job education income hobby bio remark marital_status
-      role_courtship role_matchmaker
+      role_courtship role_matchmaker birthday
       courtships_size member_sharing avatar_url)
   end
 
@@ -99,12 +100,25 @@ class User < ActiveRecord::Base
     end
   end
 
-  def viewables
+  def viewable_matchmaker_ids(delete_self=true)
     if role_matchmaker?
       matchmaker_ids = User.where(role_matchmaker: true, member_sharing: :member_public).pluck(:id)
       matchmaker_ids += user_friends.pluck(:companion_id)
-      matchmaker_ids.delete(self.id)
-      matchmaker_ids.uniq!
+      matchmaker_ids.delete(self.id) if delete_self
+      matchmaker_ids.uniq
+    end
+  end
+
+  def viewable?(user)
+    if role_matchmaker?
+      matchmaker_ids = viewable_matchmaker_ids(false)
+      matchmaker_ids&.include?(user.matchmaker_id)
+    end
+  end
+
+  def viewables
+    if role_matchmaker?
+      matchmaker_ids = viewable_matchmaker_ids
       User.where(role_courtship: true, matchmaker_id: matchmaker_ids)
     end
   end

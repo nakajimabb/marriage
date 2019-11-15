@@ -120,3 +120,4 @@ ja:
       address: '住所'
       request_sharing: '会員共有のリクエストを送る'
       partner_matches: '検索結果'
+      permitted_users: '候補者一覧'

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     get 'users/viewable'
     get 'users/:id/get', to: 'users#get'
     get 'users/:id/partner_matches', to: 'users#partner_matches'
+    get 'users/permitted_users'
     patch 'users/update_self', to: 'users#update_self'
     resources :users, :only => [:index, :show, :edit, :create, :update]
 
@@ -17,5 +18,7 @@ Rails.application.routes.draw do
 
     get 'requirements/get_by_user_id'
     resources :requirements, :only => [:create, :update]
+
+    post 'eval_partners/permit'
   end
 end

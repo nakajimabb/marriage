@@ -6,6 +6,26 @@ class UsersController < ApplicationController
       attrs = current_user.public_attributes
       users = @user.partner_matches
       users = users&.map{ |user| attrs.map { |c| [c, user.try(c)] }.to_h }
+      if users
+        users.each do |user|
+          eval_partner = @user.eval_partners.find_by(partner_id: user[:id])
+          user[:permitted] = eval_partner&.permitted
+          user[:requirement_score] = eval_partner&.requirement_score
+        end
+      end
+      render json: {users: users}
+    else
+      render status: 401
+    end
+  end
+
+  def permitted_users
+    if current_user.role_courtship?
+      attrs = current_user.public_attributes
+      partner_ids = current_user.eval_partners.where(permitted: true).pluck(:partner_id)
+      sex = current_user.male? ? :female : :male
+      users = User.where(id: partner_ids, sex: sex, role_courtship: true)
+      users = users&.map{ |user| attrs.map { |c| [c, user.try(c)] }.to_h }
       render json: {users: users}
     else
       render status: 401
