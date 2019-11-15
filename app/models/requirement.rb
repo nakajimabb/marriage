@@ -21,6 +21,32 @@ class Requirement < ApplicationRecord
   validates :min_height, numericality: { only_integer: true, greater_than: 0, less_than: 256 }, allow_blank: true
   validates :max_height, numericality: { only_integer: true, greater_than: 0, less_than: 256 }, allow_blank: true
 
+  def matched?(partner)
+    if required_age? && (min_age || max_age)
+      age = partner.age
+      return false if !age
+      return false if min_age && age < min_age
+      return false if max_age && age > max_age
+    end
+    if required_religion? && religion
+      return false if partner != religion
+    end
+    if required_marital_status? && marital_status
+      return false if partner.marital_status != marital_status
+    end
+    if required_income? && (min_income || max_income)
+      return false if !partner.income
+      return false if min_income && partner.income < min_income
+      return false if max_income && partner.income > max_income
+    end
+    if required_height? && (min_height || max_height)
+      return false if !partner.height
+      return false if min_height && partner.height < min_height
+      return false if max_height && partner.height > max_height
+    end
+    true
+  end
+
   def self.matches(user, requirement)
     if user && user.matchmaker_id && user.role_courtship? && requirement
       matchmaker = user.matchmaker
@@ -61,6 +87,8 @@ class Requirement < ApplicationRecord
         end
       end
       users
+    else
+      Requirement.none
     end
   end
 end
