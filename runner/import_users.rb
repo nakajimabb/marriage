@@ -1,5 +1,6 @@
-# runner/import_users.rb runner/users.csv
+# rails runner/import_users.rb runner/users.csv
 require 'csv'
+require 'miyabi'
 
 file_name = ARGV[0]
 row_num = 0
