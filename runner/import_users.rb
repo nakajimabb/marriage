@@ -1,4 +1,4 @@
-# rails runner/import_users.rb runner/users.csv
+# rails runner runner/import_users.rb runner/users.csv
 require 'csv'
 require 'miyabi'
 
