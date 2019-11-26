@@ -1,0 +1,26 @@
+ja:
+  activerecord:
+    models:
+      question: '質問'
+    attributes:
+      question:
+        id: 'Id'
+        question_type: '質問の種類'
+        content: '質問の内容'
+        answer_type: '回答の形式'
+        min_answer_size: '回答数~'
+        max_answer_size: '~回答数'
+  enum:
+    question:
+      question_type:
+        compatibility: '性格分析'
+        family_relationship: '親子関係'
+        precious_comparison: '婚活トレーニング'
+        religiou_value:  '宗教的価値観'
+      answer_type:
+        number: '選択'
+        note: '記述'
+        precious: 'アイテム'
+  views:
+    question:
+      list: "質問一覧"

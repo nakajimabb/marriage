@@ -20,5 +20,8 @@ Rails.application.routes.draw do
     resources :requirements, :only => [:create, :update]
 
     post 'eval_partners/permit'
+
+    post 'questions/save_collection', to: 'questions#save_collection'
+    resources :questions, :only => [:index]
   end
 end

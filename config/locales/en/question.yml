@@ -1,0 +1,26 @@
+en:
+  activerecord:
+    models:
+      question: 'Question'
+    attributes:
+      question:
+        id: 'Id'
+        question_type: 'Question type'
+        content: 'content'
+        answer_type: 'Answer type'
+        min_answer_size: 'answer size~'
+        max_answer_size: '~answer size'
+  enum:
+    question:
+      question_type:
+        compatibility: 'Compatibility'
+        family_relationship: 'Family relationship'
+        precious_comparison: 'Rrecious comparison'
+        religiou_value:  'Religiou value'
+      answer_type:
+        number: 'select'
+        note: 'note'
+        precious: 'item'
+  views:
+    question:
+      list: "List"

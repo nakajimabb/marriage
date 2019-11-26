@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_15_132026) do
+ActiveRecord::Schema.define(version: 2019_11_22_134638) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -43,6 +43,30 @@ ActiveRecord::Schema.define(version: 2019_11_15_132026) do
     t.index ["partner_id"], name: "index_eval_partners_on_partner_id"
     t.index ["user_id", "partner_id"], name: "index_eval_partners_on_user_id_and_partner_id", unique: true
     t.index ["user_id"], name: "index_eval_partners_on_user_id"
+  end
+
+  create_table "question_choices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "question_id", null: false
+    t.string "label"
+    t.integer "number"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_question_choices_on_question_id"
+  end
+
+  create_table "questions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.integer "question_type", limit: 1, null: false, unsigned: true
+    t.integer "answer_type", limit: 1, null: false, unsigned: true
+    t.text "content", null: false
+    t.integer "min_answer_size", limit: 1, default: 1, null: false, unsigned: true
+    t.integer "max_answer_size", limit: 1, default: 1, null: false, unsigned: true
+    t.integer "rank", null: false
+    t.bigint "created_by_id", null: false
+    t.bigint "updated_by_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_by_id"], name: "index_questions_on_created_by_id"
+    t.index ["updated_by_id"], name: "index_questions_on_updated_by_id"
   end
 
   create_table "requirements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -161,6 +185,9 @@ ActiveRecord::Schema.define(version: 2019_11_15_132026) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "eval_partners", "users"
   add_foreign_key "eval_partners", "users", column: "partner_id"
+  add_foreign_key "question_choices", "questions"
+  add_foreign_key "questions", "users", column: "created_by_id"
+  add_foreign_key "questions", "users", column: "updated_by_id"
   add_foreign_key "requirements", "users"
   add_foreign_key "requirements", "users", column: "created_by_id"
   add_foreign_key "requirements", "users", column: "updated_by_id"
