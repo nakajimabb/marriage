@@ -24,3 +24,4 @@ ja:
   views:
     question:
       list: "質問一覧"
+      add_question: '質問を追加'

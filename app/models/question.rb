@@ -1,6 +1,5 @@
 class Question < ApplicationRecord
-  REGISTRABLE_ATTRIBUTES = %w(id question_type answer_type content min_answer_size
-                              max_answer_size created_by_id updated_by_id index)
+  REGISTRABLE_ATTRIBUTES = %w(id question_type answer_type content min_answer_size max_answer_size index)
 
   attr_accessor :index
   has_many :question_choices, dependent: :destroy

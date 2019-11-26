@@ -24,3 +24,4 @@ en:
   views:
     question:
       list: "List"
+      add_question: 'Add question'

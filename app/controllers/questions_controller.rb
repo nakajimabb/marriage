@@ -16,36 +16,49 @@ class QuestionsController < ApplicationController
   end
 
   def save_collection
-    questions = target_questions
     begin
-      Question.transaction do
-        rank = Question.where(question_type: :compatibility).maximum(:rank) + 1
-        questions.each do |question|
-          if question.new_record?
-            question.created_by_id = question.updated_by_id = current_user.id
-            question.rank = rank
-            rank += 1
-          else
-            question.updated_by_id = current_user.id
+      if params[:question_type]
+        question_type = params[:question_type].to_sym
+        rank = Question.where(question_type: question_type).maximum(:rank).to_i + 1
+        questions = target_questions(question_type)
+        Question.transaction do
+          questions.each do |question|
+            if question.new_record?
+              question.created_by_id = question.updated_by_id = current_user.id
+              question.rank = rank
+              rank += 1
+            else
+              question.updated_by_id = current_user.id
+            end
+            raise QuestionException.new(question) unless question.save
           end
-          raise QuestionException.new(question) unless question.save
         end
+        questions = Question.where(question_type: question_type).order(:rank)
+        render status: 200, json: {questions: questions}
+      else
+        render status: 501
       end
-      render status: 200
     rescue => e
       render status: 500, json: {errors: e.question.errors, index: e.question.index}
     end
   end
 
 private
-  def target_questions
+  def empty_params?(p)
+    Question::REGISTRABLE_ATTRIBUTES.all?{ |c| p[c].blank? }
+  end
+
+  def target_questions(question_type)
     questions = []
     if question_collection_params.has_key?(:question_attributes)
       question_collection_params[:question_attributes].each do |i, p|
-        question = Question.find_or_initialize_by(id: p[:id])
-        question.attributes = p
-        question.index = i
-        questions << question
+        if !empty_params?(p)
+          question = Question.find_or_initialize_by(id: p[:id])
+          question.attributes = p
+          question.question_type = question_type
+          question.index = i
+          questions << question
+        end
       end
     end
     questions
