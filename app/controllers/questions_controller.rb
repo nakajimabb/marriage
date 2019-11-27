@@ -1,4 +1,6 @@
 class QuestionsController < ApplicationController
+  before_action :set_question, only: [:show, :update]
+
   class QuestionException < StandardError
     attr_accessor :question
 
@@ -11,61 +13,57 @@ class QuestionsController < ApplicationController
   def index
     if params[:question_type]
       questions = Question.where(question_type: params[:question_type]).order(:rank)
+      questions = questions.map{ |question| question_to_json(question) }
       render json: {questions: questions}
     end
   end
 
-  def save_collection
-    begin
-      if params[:question_type]
-        question_type = params[:question_type].to_sym
-        rank = Question.where(question_type: question_type).maximum(:rank).to_i + 1
-        questions = target_questions(question_type)
-        Question.transaction do
-          questions.each do |question|
-            if question.new_record?
-              question.created_by_id = question.updated_by_id = current_user.id
-              question.rank = rank
-              rank += 1
-            else
-              question.updated_by_id = current_user.id
-            end
-            raise QuestionException.new(question) unless question.save
-          end
-        end
-        questions = Question.where(question_type: question_type).order(:rank)
-        render status: 200, json: {questions: questions}
+  def create
+    if current_user.role_head?
+      @question = Question.new(question_params)
+      @question.created_by_id = @question.updated_by_id = current_user.id
+      @question.rank = Question.where(question_type: @question.question_type)
+                               .maximum(:rank).to_i + 1 if @question.rank.nil?
+      if @question.save
+        render status: 200, json: {question: question_to_json(@question)}
       else
-        render status: 501
+        render status: 500, json: {errors: @question.errors}
       end
-    rescue => e
-      render status: 500, json: {errors: e.question.errors, index: e.question.index}
+    else
+      render status: 401
+    end
+  end
+
+  def update
+    if current_user.role_head?
+      p = question_params
+      @question.assign_attributes(p)
+      @question.updated_by_id = current_user.id if @question.changes.present?
+      if @question.save
+        render status: 200, json: {question: question_to_json(@question)}
+      else
+        render status: 500, json: {errors: @question.errors}
+      end
+    else
+      render status: 401
     end
   end
 
 private
-  def empty_params?(p)
-    Question::REGISTRABLE_ATTRIBUTES.all?{ |c| p[c].blank? }
+  def set_question
+    @question = Question.find(params[:id])
   end
 
-  def target_questions(question_type)
-    questions = []
-    if question_collection_params.has_key?(:question_attributes)
-      question_collection_params[:question_attributes].each do |i, p|
-        if !empty_params?(p)
-          question = Question.find_or_initialize_by(id: p[:id])
-          question.attributes = p
-          question.question_type = question_type
-          question.index = i
-          questions << question
-        end
-      end
-    end
-    questions
+  def question_to_json(question)
+    attrs = Question::REGISTRABLE_ATTRIBUTES
+    q = attrs.map { |c| [c, question.try(c)] }.to_h
+    q[:question_choices_attributes] = question.question_choices
+    q
   end
 
-  def question_collection_params
-    params.fetch(:form_question_collection, {})
-    .permit(question_attributes: Question::REGISTRABLE_ATTRIBUTES)
+  def question_params
+    params.require(:question)
+    .permit(Question::REGISTRABLE_ATTRIBUTES +
+            [question_choices_attributes: QuestionChoice::REGISTRABLE_ATTRIBUTES])
   end
 end

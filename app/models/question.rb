@@ -1,8 +1,8 @@
 class Question < ApplicationRecord
-  REGISTRABLE_ATTRIBUTES = %w(id question_type answer_type content min_answer_size max_answer_size index)
+  REGISTRABLE_ATTRIBUTES = %w(id question_type answer_type content min_answer_size max_answer_size)
 
-  attr_accessor :index
   has_many :question_choices, dependent: :destroy
+  accepts_nested_attributes_for :question_choices, allow_destroy: true
   belongs_to :created_by, class_name: 'User', foreign_key: :created_by_id, optional: true
   belongs_to :updated_by, class_name: 'User', foreign_key: :updated_by_id, optional: true
 
@@ -14,4 +14,5 @@ class Question < ApplicationRecord
   validates :answer_type, presence: true
   validates :min_answer_size, numericality: { only_integer: true, greater_than: 0, less_than: 100 }
   validates :max_answer_size, numericality: { only_integer: true, greater_than: 0, less_than: 100 }
+  validates :rank, presence: true
 end

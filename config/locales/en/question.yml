@@ -8,8 +8,13 @@ en:
         question_type: 'Question type'
         content: 'content'
         answer_type: 'Answer type'
-        min_answer_size: 'answer size~'
-        max_answer_size: '~answer size'
+        min_answer_size: 'answer Size~'
+        max_answer_size: '~answer Size'
+        rank: 'Order'
+        question_choices:
+          id: 'Id'
+          label: 'Choice'
+          value: 'Value'
   enum:
     question:
       question_type:

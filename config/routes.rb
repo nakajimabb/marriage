@@ -19,9 +19,8 @@ Rails.application.routes.draw do
     get 'requirements/get_by_user_id'
     resources :requirements, :only => [:create, :update]
 
-    post 'eval_partners/permit'
+    resources :questions, :only => [:index, :create, :update]
 
-    post 'questions/save_collection', to: 'questions#save_collection'
-    resources :questions, :only => [:index]
+    post 'eval_partners/permit'
   end
 end

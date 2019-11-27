@@ -1,0 +1,9 @@
+en:
+  activerecord:
+    models:
+      question_choice: 'Choice'
+    attributes:
+      question_choice:
+        id: 'Id'
+        label: 'Choice'
+        value: 'Value'

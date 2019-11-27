@@ -10,6 +10,11 @@ ja:
         answer_type: '回答の形式'
         min_answer_size: '回答数~'
         max_answer_size: '~回答数'
+        rank: '順序'
+        question_choices:
+          id: 'Id'
+          label: '選択項目'
+          value: '値'
   enum:
     question:
       question_type:

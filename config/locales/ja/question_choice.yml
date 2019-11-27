@@ -1,0 +1,9 @@
+ja:
+  activerecord:
+    models:
+      question_choice: '選択肢'
+    attributes:
+      question_choice:
+        id: 'Id'
+        label: '選択項目'
+        value: '値'
