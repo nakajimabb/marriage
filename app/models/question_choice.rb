@@ -4,4 +4,8 @@ class QuestionChoice < ApplicationRecord
 
   validates :label, presence: true
   validates :value, presence: true
+
+  def empty?
+    label.blank? && value.blank?
+  end
 end

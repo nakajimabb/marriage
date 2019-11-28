@@ -24,8 +24,9 @@ class QuestionsController < ApplicationController
       @question.created_by_id = @question.updated_by_id = current_user.id
       @question.rank = Question.where(question_type: @question.question_type)
                                .maximum(:rank).to_i + 1 if @question.rank.nil?
+      @question.question_choices.each { |qc| qc.delete if qc.empty? }
       if @question.save
-        render status: 200, json: {question: question_to_json(@question)}
+        render status: 200, json: {question: question_to_json(@question.reload)}
       else
         render status: 500, json: {errors: @question.errors}
       end
@@ -39,8 +40,9 @@ class QuestionsController < ApplicationController
       p = question_params
       @question.assign_attributes(p)
       @question.updated_by_id = current_user.id if @question.changes.present?
+      @question.question_choices.each { |qc| qc.delete if qc.empty? }
       if @question.save
-        render status: 200, json: {question: question_to_json(@question)}
+        render status: 200, json: {question: question_to_json(@question.reload)}
       else
         render status: 500, json: {errors: @question.errors}
       end
