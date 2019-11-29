@@ -1,0 +1,8 @@
+en:
+  activerecord:
+    models:
+      answer_note: 'answer Note'
+    attributes:
+      answer_note:
+        id: 'Id'
+        note: 'Note'

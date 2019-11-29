@@ -52,14 +52,19 @@ class QuestionsController < ApplicationController
   end
 
   def save_answers
-    errors = {}
+    errors = Hash.new('')
     target_user = User.find_by_id(answers_params[:user][:id]) if answers_params[:user]
+    answer_values = target_answer_values
+    answer_notes = target_answer_notes
     begin
       if authorized?(current_user, target_user)
         AnswerValue.transaction do
+          # 回答(質問) 削除・保存
           destroy_answer_values.each(&:delete)
-          target_answer_values.each.each(&:save!)
-
+          answer_values.each.each(&:save!)
+          # 回答(記述) 削除・保存
+          destroy_answer_notes.each(&:delete)
+          answer_notes.each.each(&:save!)
           # 回答数チェック
           target_questions.each do |question|
             question.check_answer_size(target_user.id)
@@ -74,6 +79,8 @@ class QuestionsController < ApplicationController
         render status: 401
       end
     rescue => e
+      answer_values.each { |value| errors[value.question_id] += value.errors.full_messages.join(', ') if value.errors.present?  }
+      answer_notes.each  { |note|  errors[note.question_id]  += note.errors.full_messages.join(', ')  if note.errors.present?  }
       render status: 500, json: {errors: errors}
     end
   end
@@ -95,6 +102,7 @@ private
     end
     if answer && user_id
       q[:answer_values_attributes] = question.answer_values.where(user_id: user_id)
+      q[:answer_notes_attributes] = question.answer_notes.where(user_id: user_id)
     end
     q
   end
@@ -119,6 +127,26 @@ private
     end
   end
 
+  def destroy_answer_notes
+    (answers_params[:answer_notes_attributes] || []).select { |p| p[:_destroy] }
+        .map do |p|
+      answer_note = AnswerNote.find_or_initialize_by(id: p[:id])
+      answer_note.attributes = p.select{ |k, _| k.to_sym != :_destroy }
+      answer_note
+    end
+  end
+
+  def target_answer_notes
+    user_id = answers_params[:user][:id] if answers_params[:user]
+    (answers_params[:answer_notes_attributes] || []).select { |p| !p[:_destroy] }
+        .map do |p|
+      answer_note = AnswerNote.find_or_initialize_by(id: p[:id])
+      answer_note.attributes = p.select{ |k, _| k.to_sym != :_destroy }
+      answer_note.user_id = user_id
+      answer_note
+    end
+  end
+
   def target_questions
     questions = (answers_params[:questions] || [])
     Question.where(id: questions.map{ |question| question[:id] })
@@ -134,6 +162,7 @@ private
     params.fetch(:form_answers, {})
         .permit(user: [:id],
                 questions: [:id],
-                answer_values_attributes: AnswerValue::REGISTRABLE_ATTRIBUTES)
+                answer_values_attributes: AnswerValue::REGISTRABLE_ATTRIBUTES,
+                answer_notes_attributes: AnswerNote::REGISTRABLE_ATTRIBUTES)
   end
 end

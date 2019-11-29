@@ -1,0 +1,8 @@
+ja:
+  activerecord:
+    models:
+      answer_note: '回答(記述)'
+    attributes:
+      answer_note:
+        id: 'Id'
+        note: '回答'

@@ -33,5 +33,5 @@ ja:
       answer_size: '回答数'
   errors:
     question:
-      below_answer_size: '%{size}個以上回答してください。'
-      exceed_answer_size: '%{size}個までしか回答できません。'
+      below_answer_size: '%{size}つ以上回答してください。'
+      exceed_answer_size: '%{size}つまでしか回答できません。'
