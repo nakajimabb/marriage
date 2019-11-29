@@ -30,3 +30,8 @@ ja:
     question:
       list: "質問一覧"
       add_question: '質問を追加'
+      answer_size: '回答数'
+  errors:
+    question:
+      below_answer_size: '%{size}個以上回答してください。'
+      exceed_answer_size: '%{size}個までしか回答できません。'

@@ -16,3 +16,7 @@ en:
       save_done: 'successfully saved!'
       notification: 'Notification'
       required: 'Required'
+      back_to: 'Back to {{page}}'
+  errors:
+    app:
+      occurred: 'Error has occurred.'

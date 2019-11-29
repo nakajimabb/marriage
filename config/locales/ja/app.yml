@@ -16,3 +16,7 @@ ja:
       save_done: '保存しました。'
       notification: 'お知らせ'
       required: '必須'
+      back_to: '{{page}}へ戻る'
+  errors:
+    app:
+      occurred: 'エラーが発生しました。'

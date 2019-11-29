@@ -30,3 +30,8 @@ en:
     question:
       list: "List"
       add_question: 'Add question'
+      answer_size: 'Number of answers'
+  errors:
+    question:
+      below_answer_size: 'Answer %{size} or more.'
+      exceed_answer_size: 'Answer %{size} or less.'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_22_134638) do
+ActiveRecord::Schema.define(version: 2019_11_28_021533) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -31,6 +31,16 @@ ActiveRecord::Schema.define(version: 2019_11_22_134638) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "answer_values", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "question_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_answer_values_on_question_id"
+    t.index ["user_id"], name: "index_answer_values_on_user_id"
   end
 
   create_table "eval_partners", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -183,6 +193,8 @@ ActiveRecord::Schema.define(version: 2019_11_22_134638) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "answer_values", "questions"
+  add_foreign_key "answer_values", "users"
   add_foreign_key "eval_partners", "users"
   add_foreign_key "eval_partners", "users", column: "partner_id"
   add_foreign_key "question_choices", "questions"
