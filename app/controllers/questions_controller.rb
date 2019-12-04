@@ -96,6 +96,7 @@ private
 
   def question_to_json(question, choice=true, answer=false, user_id=nil)
     attrs = Question::REGISTRABLE_ATTRIBUTES
+    user_id = user_id.split(',') if user_id   # 複数指定可能
     q = attrs.map { |c| [c, question.try(c)] }.to_h
     if choice
       q[:question_choices_attributes] = question.question_choices

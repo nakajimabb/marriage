@@ -8,7 +8,7 @@ class Question < ApplicationRecord
   belongs_to :created_by, class_name: 'User', foreign_key: :created_by_id, optional: true
   belongs_to :updated_by, class_name: 'User', foreign_key: :updated_by_id, optional: true
 
-  enum question_type: {compatibility: 1, family_relationship: 2, precious_comparison: 3, religiou_value: 4}
+  enum question_type: {compatibility: 1, family_relationship: 2, precious_comparison: 3, religion_value: 4}
   enum answer_type: {number: 1, precious: 3, note: 4}
 
   validates :content, presence: true

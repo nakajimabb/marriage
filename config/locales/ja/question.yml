@@ -21,7 +21,7 @@ ja:
         compatibility: '性格分析'
         family_relationship: '親子関係'
         precious_comparison: '婚活トレーニング'
-        religiou_value:  '宗教的価値観'
+        religion_value:  '宗教的価値観'
       answer_type:
         number: '選択'
         note: '記述'

@@ -20,8 +20,8 @@ en:
       question_type:
         compatibility: 'Compatibility'
         family_relationship: 'Family relationship'
-        precious_comparison: 'Rrecious comparison'
-        religiou_value:  'Religiou value'
+        precious_comparison: 'Precious comparison'
+        religion_value:  'Religion value'
       answer_type:
         number: 'select'
         note: 'note'
