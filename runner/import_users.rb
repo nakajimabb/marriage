@@ -17,7 +17,17 @@ CSV.foreach(file_name, {encoding: 'BOM|UTF-8',}) do |row|
         params[:last_name], params[:first_name] = row[i].split(' ')
       when :full_name_kana
         params[:last_name_kana], params[:first_name_kana] = row[i].split(' ')
-        params[:nickname] = params[:first_name_kana].to_roman
+        nickname = params[:first_name_kana].to_roman
+        if User.find_by_nickname(nickname)
+          2.step(10) do |i|
+            unless User.find_by_nickname(nickname + i.to_s)
+              params[:nickname] = nickname + i.to_s
+              break
+            end
+          end
+        else
+          params[:nickname] = nickname
+        end
       when :sex
         params[:sex] = row[i] == '男' ? :male : :female
       when :prefecture, :hometown, :blood

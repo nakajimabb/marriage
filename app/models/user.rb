@@ -29,6 +29,7 @@ class User < ActiveRecord::Base
   enum country: Country::CODES
   enum prefecture: Prefecture::CODES
 
+  validates :nickname, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
   validates :sex, presence: true
   validates :height, numericality: { only_integer: true, greater_than: 0, less_than: 256 }, allow_blank: true

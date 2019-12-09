@@ -144,8 +144,8 @@ ActiveRecord::Schema.define(version: 2019_11_29_092510) do
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
     t.datetime "locked_at"
-    t.string "nickname"
-    t.string "email"
+    t.string "nickname", null: false
+    t.string "email", null: false
     t.text "tokens"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -197,6 +197,7 @@ ActiveRecord::Schema.define(version: 2019_11_29_092510) do
     t.index ["created_by_id"], name: "index_users_on_created_by_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["matchmaker_id"], name: "index_users_on_matchmaker_id"
+    t.index ["nickname"], name: "index_users_on_nickname", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
     t.index ["updated_by_id"], name: "index_users_on_updated_by_id"
