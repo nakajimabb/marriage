@@ -35,11 +35,19 @@ class User < ActiveRecord::Base
   validates :height, numericality: { only_integer: true, greater_than: 0, less_than: 256 }, allow_blank: true
   validates :weight, numericality: { only_integer: true, greater_than: 0, less_than: 256 }, allow_blank: true
 
+  def self.prefecture_name(code)
+    I18n.t('prefecture.' + code.to_s)
+  end
+
+  def self.prefecture_code(name)
+    (Prefecture::CODES.find{ |code, _| I18n.translate('prefecture.' + code.to_s) == name } || [])[0]
+  end
+
   def registrable_attributes(user)
     if role_head? || (role_matchmaker? && (user.nil? || user.matchmaker_id == self.id))
       attrs = %i(nickname email first_name last_name first_name_kana last_name_kana
                 first_name_en last_name_en sex birthday tel fax mobile
-                lang country zip prefecture city house_number
+                lang country zip prefecture city street building
                 religion sect church baptized baptized_year
                 role_courtship marital_status bio remark member_sharing
                 income drinking smoking weight height job education hobby blood

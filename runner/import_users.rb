@@ -9,7 +9,7 @@ CSV.foreach(file_name, {encoding: 'BOM|UTF-8',}) do |row|
   if row_num == 0
     header = row
   else
-    params = {}
+    params = {lang: :ja, country: :jpn}
     header.each_with_index do |key, i|
       column = key.strip.to_sym
       case column
@@ -30,7 +30,11 @@ CSV.foreach(file_name, {encoding: 'BOM|UTF-8',}) do |row|
         end
       when :sex
         params[:sex] = row[i] == '男' ? :male : :female
-      when :prefecture, :hometown, :blood
+      when :prefecture
+        params[:prefecture] = User.prefecture_code(row[i])
+      when :blood
+        params[:blood] = 'type_' + row[i].to_s.downcase
+      when :hometown
       when :role_courtship, :role_matchmaker
         params[column] = row[i] == 'TRUE'
       else

@@ -16,7 +16,8 @@ class AddEtcToUser < ActiveRecord::Migration[6.0]
     add_column :users, :zip, :string, limit: 10
     add_column :users, :prefecture, :smallint
     add_column :users, :city, :string, limit: 64
-    add_column :users, :house_number, :string, limit: 64
+    add_column :users, :street, :string, limit: 64
+    add_column :users, :building, :string, limit: 64
     add_column :users, :religion, :tinyint
     add_column :users, :sect, :string, limit: 64
     add_column :users, :church, :string, limit: 64

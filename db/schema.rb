@@ -165,7 +165,8 @@ ActiveRecord::Schema.define(version: 2019_11_29_092510) do
     t.string "zip", limit: 10
     t.integer "prefecture", limit: 2
     t.string "city", limit: 64
-    t.string "house_number", limit: 64
+    t.string "street", limit: 64
+    t.string "building", limit: 64
     t.integer "religion", limit: 1
     t.string "sect", limit: 64
     t.string "church", limit: 64
