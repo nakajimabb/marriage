@@ -1,0 +1,39 @@
+ja:
+  activerecord:
+    models:
+      room: 'イベント'
+    attributes:
+      room:
+        id: 'Id'
+        name: 'イベント名'
+        room_type: 'イベントの種類'
+        dated_on: '日付'
+        fixed_on: '締切'
+        remark: '説明'
+        prefecture: '都道府県'
+        address: 'それ以降の住所'
+        min_age: '最低年齢'
+        max_age: '最高年齢'
+        male_count: '男性人数'
+        female_count: '女性人数'
+  enum:
+    room:
+      room_type:
+        tea: 'お茶会'
+        meal: '食事会'
+        study: '勉強会'
+  views:
+    room:
+      list: "イベント一覧"
+      all: "全て"
+      available: "参加可能"
+      mylist: "参加予定"
+      join: "参加する"
+      left: "参加取消"
+      add_room: "イベントを追加"
+      place: '場所'
+      user_count: '人数'
+      confirm_join: '参加しますか？'
+      confirm_left: '参加を取り消しますか？'
+  errors:
+    room:

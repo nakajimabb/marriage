@@ -23,5 +23,9 @@ Rails.application.routes.draw do
     resources :questions, :only => [:index, :create, :update]
 
     post 'eval_partners/permit'
+
+    post 'rooms/:id/join', to: 'rooms#join'
+    post 'rooms/:id/left', to: 'rooms#left'
+    resources :rooms, :only => [:index, :create, :edit, :update]
   end
 end

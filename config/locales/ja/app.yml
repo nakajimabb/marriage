@@ -18,6 +18,7 @@ ja:
       required: '必須'
       back: '戻る'
       back_to: '{{page}}へ戻る'
+      human_number_unit: '人'
   errors:
     app:
       occurred: 'エラーが発生しました。'

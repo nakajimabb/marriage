@@ -1,0 +1,39 @@
+en:
+  activerecord:
+    models:
+      room: 'Event'
+    attributes:
+      room:
+        id: 'Id'
+        name: 'Event name'
+        room_type: 'Event type'
+        dated_on: 'Date'
+        fixed_on: 'Fixed date'
+        remark: 'Remark'
+        prefecture: 'Prefecture'
+        address: 'Address'
+        min_age: 'Min age'
+        max_age: 'Max age'
+        male_count: 'Male count'
+        female_count: 'Female count'
+  enum:
+    room:
+      room_type:
+        tea: 'Tea'
+        meal: 'Meal'
+        study: 'Study'
+  views:
+    room:
+      list: "Event list"
+      all: "All"
+      available: "Available"
+      mylist: "My list"
+      join: "Join"
+      left: "Left"
+      add_room: "Add event"
+      place: 'Place'
+      user_count: 'users Count'
+      confirm_join: 'Are you sure to join?'
+      confirm_left: 'Are you sure to left?'
+  errors:
+    room:

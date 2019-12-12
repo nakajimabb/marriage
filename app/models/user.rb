@@ -43,6 +43,10 @@ class User < ActiveRecord::Base
     (Prefecture::CODES.find{ |code, _| I18n.translate('prefecture.' + code.to_s) == name } || [])[0]
   end
 
+  def role_exists?
+    role_head? || role_matchmaker? || role_courtship?
+  end
+
   def registrable_attributes(user)
     if role_head? || (role_matchmaker? && (user.nil? || user.matchmaker_id == self.id))
       attrs = %i(nickname email first_name last_name first_name_kana last_name_kana

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_29_092510) do
+ActiveRecord::Schema.define(version: 2019_12_10_053541) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -111,6 +111,34 @@ ActiveRecord::Schema.define(version: 2019_11_29_092510) do
     t.index ["created_by_id"], name: "index_requirements_on_created_by_id"
     t.index ["updated_by_id"], name: "index_requirements_on_updated_by_id"
     t.index ["user_id"], name: "index_requirements_on_user_id", unique: true
+  end
+
+  create_table "room_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "room_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["room_id", "user_id"], name: "index_room_users_on_room_id_and_user_id", unique: true
+    t.index ["room_id"], name: "index_room_users_on_room_id"
+    t.index ["user_id"], name: "index_room_users_on_user_id"
+  end
+
+  create_table "rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.integer "room_type"
+    t.date "dated_on", null: false
+    t.date "fixed_on", null: false
+    t.string "name"
+    t.text "remark"
+    t.integer "prefecture", limit: 2
+    t.string "address"
+    t.bigint "user_id", null: false
+    t.integer "min_age", limit: 1, unsigned: true
+    t.integer "max_age", limit: 1, unsigned: true
+    t.integer "male_count", limit: 1, null: false, unsigned: true
+    t.integer "female_count", limit: 1, null: false, unsigned: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_rooms_on_user_id"
   end
 
   create_table "user_friends", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -217,6 +245,9 @@ ActiveRecord::Schema.define(version: 2019_11_29_092510) do
   add_foreign_key "requirements", "users"
   add_foreign_key "requirements", "users", column: "created_by_id"
   add_foreign_key "requirements", "users", column: "updated_by_id"
+  add_foreign_key "room_users", "rooms"
+  add_foreign_key "room_users", "users"
+  add_foreign_key "rooms", "users"
   add_foreign_key "user_friends", "users"
   add_foreign_key "user_friends", "users", column: "companion_id"
   add_foreign_key "users", "users", column: "created_by_id"
