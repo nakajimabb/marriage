@@ -6,6 +6,7 @@ ja:
       room:
         id: 'Id'
         name: 'イベント名'
+        user: '登録者'
         room_type: 'イベントの種類'
         dated_on: '日付'
         fixed_on: '締切'
@@ -35,5 +36,6 @@ ja:
       user_count: '人数'
       confirm_join: '参加しますか？'
       confirm_left: '参加を取り消しますか？'
+      users: '参加者'
   errors:
     room:

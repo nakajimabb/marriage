@@ -26,6 +26,6 @@ Rails.application.routes.draw do
 
     post 'rooms/:id/join', to: 'rooms#join'
     post 'rooms/:id/left', to: 'rooms#left'
-    resources :rooms, :only => [:index, :create, :edit, :update]
+    resources :rooms, :only => [:index, :show, :create, :edit, :update]
   end
 end

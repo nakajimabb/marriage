@@ -6,6 +6,7 @@ en:
       room:
         id: 'Id'
         name: 'Event name'
+        user: 'Registrant'
         room_type: 'Event type'
         dated_on: 'Date'
         fixed_on: 'Fixed date'
@@ -35,5 +36,6 @@ en:
       user_count: 'users Count'
       confirm_join: 'Are you sure to join?'
       confirm_left: 'Are you sure to left?'
+      users: 'Participants'
   errors:
     room:

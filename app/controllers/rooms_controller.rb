@@ -65,10 +65,30 @@ class RoomsController < ApplicationController
     end
   end
 
+  def show
+    permitted = [:created, :joined, :registrable]
+    auth = current_user.role_head? || current_user.role_matchmaker?
+    auth ||= permitted.include?(@room.availability(current_user))
+    if auth
+      room = @room.attributes
+      user_attrs = [:nickname, :sex, :age, :marital_status, :role_courtship, :role_matchmaker, :religion, :job, :hobby]
+      users = @room.users
+      users = users.map{ |user| user_attrs.map { |c| [c, user.try(c)] }.to_h }
+      user = @room.user
+      user = user_attrs.map { |c| [c, user.try(c)] }.to_h
+      render json: {room: room, user: user, users: users}
+    else
+      render status: 401
+    end
+  end
+
   def edit
     if current_user.role_head? || current_user.id == @room.user_id
       room = @room.attributes
-      render json: {room: room}
+      user_attrs = [:nickname, :sex, :age, :marital_status, :role_courtship, :role_matchmaker, :religion, :job, :hobby]
+      users = @room.users
+      users = users.map{ |user| user_attrs.map { |c| [c, user.try(c)] }.to_h }
+      render json: {room: room, users: users}
     else
       render status: 401
     end
