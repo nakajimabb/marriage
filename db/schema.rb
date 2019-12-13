@@ -33,6 +33,17 @@ ActiveRecord::Schema.define(version: 2019_12_10_053541) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "answer_choices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "question_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "question_choice_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_choice_id"], name: "index_answer_choices_on_question_choice_id"
+    t.index ["question_id"], name: "index_answer_choices_on_question_id"
+    t.index ["user_id"], name: "index_answer_choices_on_user_id"
+  end
+
   create_table "answer_notes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "question_id", null: false
     t.bigint "user_id", null: false
@@ -41,16 +52,6 @@ ActiveRecord::Schema.define(version: 2019_12_10_053541) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["question_id"], name: "index_answer_notes_on_question_id"
     t.index ["user_id"], name: "index_answer_notes_on_user_id"
-  end
-
-  create_table "answer_values", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.bigint "question_id", null: false
-    t.bigint "user_id", null: false
-    t.integer "value"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["question_id"], name: "index_answer_values_on_question_id"
-    t.index ["user_id"], name: "index_answer_values_on_user_id"
   end
 
   create_table "eval_partners", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -233,10 +234,11 @@ ActiveRecord::Schema.define(version: 2019_12_10_053541) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "answer_choices", "question_choices"
+  add_foreign_key "answer_choices", "questions"
+  add_foreign_key "answer_choices", "users"
   add_foreign_key "answer_notes", "questions"
   add_foreign_key "answer_notes", "users"
-  add_foreign_key "answer_values", "questions"
-  add_foreign_key "answer_values", "users"
   add_foreign_key "eval_partners", "users"
   add_foreign_key "eval_partners", "users", column: "partner_id"
   add_foreign_key "question_choices", "questions"
