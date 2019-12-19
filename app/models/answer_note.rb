@@ -1,5 +1,5 @@
 class AnswerNote < ApplicationRecord
-  REGISTRABLE_ATTRIBUTES = %w(id question_id note _destroy)
+  REGISTRABLE_ATTRIBUTES = %i(id question_id note _destroy)
   belongs_to :question
   belongs_to :user
 

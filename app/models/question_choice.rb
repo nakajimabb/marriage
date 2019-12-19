@@ -1,5 +1,5 @@
 class QuestionChoice < ApplicationRecord
-  REGISTRABLE_ATTRIBUTES = %w(id label value)
+  REGISTRABLE_ATTRIBUTES = %i(id label value)
   belongs_to :question
 
   validates :label, presence: true

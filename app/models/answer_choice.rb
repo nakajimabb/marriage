@@ -1,5 +1,5 @@
 class AnswerChoice < ApplicationRecord
-  REGISTRABLE_ATTRIBUTES = %w(id question_id question_choice_id _destroy)
+  REGISTRABLE_ATTRIBUTES = %i(id question_id question_choice_id _destroy)
   belongs_to :user
   belongs_to :question
   belongs_to :question_choice

@@ -1,5 +1,5 @@
 class Room < ApplicationRecord
-  REGISTRABLE_ATTRIBUTES = %w(name room_type dated_on fixed_on min_age max_age male_count female_count prefecture address remark)
+  REGISTRABLE_ATTRIBUTES = %i(name room_type dated_on fixed_on min_age max_age male_count female_count prefecture address remark)
   belongs_to :user
   has_many :room_users, dependent: :destroy
   has_many :users, through: :room_users

@@ -1,5 +1,5 @@
 class Question < ApplicationRecord
-  REGISTRABLE_ATTRIBUTES = %w(id question_type answer_type content min_answer_size max_answer_size)
+  REGISTRABLE_ATTRIBUTES = %i(id question_type answer_type content min_answer_size max_answer_size)
 
   has_many :question_choices, dependent: :destroy
   accepts_nested_attributes_for :question_choices, allow_destroy: true

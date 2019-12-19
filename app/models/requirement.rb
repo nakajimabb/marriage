@@ -1,5 +1,5 @@
 class Requirement < ApplicationRecord
-  REGISTRABLE_ATTRIBUTES = %w(id user_id
+  REGISTRABLE_ATTRIBUTES = %i(id user_id
                               min_age max_age required_age
                               religion required_religion
                               marital_status required_marital_status
