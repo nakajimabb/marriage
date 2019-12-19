@@ -1,20 +1,13 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :update]
 
-  class QuestionException < StandardError
-    attr_accessor :question
-
-    def initialize(question)
-      self.question = question
-      super
-    end
-  end
-
   def index
     if params[:question_type]
       questions = Question.where(question_type: params[:question_type]).order(:rank)
       questions = questions.map{ |question| question_to_json(question, true, params[:answer], params[:user_id]) }
       render json: {questions: questions}
+    else
+      render json: {questions: Question.none}
     end
   end
 
