@@ -1,6 +1,6 @@
 class AddEtcToUser < ActiveRecord::Migration[6.0]
   def change
-    add_column :users, :status, :tinyint, unsigned: true, null: false
+    add_column :users, :status, :tinyint, unsigned: true, null: false, default: 1
     add_column :users, :first_name, :string, limit: 64
     add_column :users, :last_name, :string, limit: 64
     add_column :users, :first_name_kana, :string, limit: 64
