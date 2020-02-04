@@ -47,4 +47,4 @@ gem 'miyabi'
 
 # aws関連
 gem "aws-sdk-s3", require: false
-
+gem "aws-ses"

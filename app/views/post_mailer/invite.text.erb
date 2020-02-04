@@ -1,0 +1,7 @@
+<% name = @to_user.full_name %>
+<% name = @to_user.nickname if name.blank? %>
+<%= name %> さんへ
+
+<%= @from_user.full_name %> さんよりご招待されています。
+
+<%= @url %>

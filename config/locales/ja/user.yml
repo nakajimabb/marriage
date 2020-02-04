@@ -137,3 +137,5 @@ ja:
       confirm_submit: 'この情報で確定しますか?'
       confirm_retract: '差し戻しますか?'
       waiting_list: '許可待ちリスト'
+      send_invitation: '招待メール'
+      sent_invitation: '招待メールを送信しました。'

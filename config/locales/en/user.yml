@@ -137,3 +137,5 @@ en:
       confirm_submit: 'Are you sure?'
       confirm_retract: 'Are you sure?'
       waiting_list: 'Waiting list'
+      send_invitation: 'send Invitation'
+      sent_invitation: 'sent Invitation mail'

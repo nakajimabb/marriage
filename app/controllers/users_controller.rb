@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :get, :partner_matches]
+  before_action :set_user, only: [:show, :edit, :update, :get, :partner_matches, :send_invitation]
 
   def partner_matches
     if current_user.role_head? || (current_user.role_matchmaker? && @user.matchmaker_id == current_user.id)
@@ -135,6 +135,14 @@ class UsersController < ApplicationController
       else
         render status: 500, json: {errors: @user.errors}
       end
+    else
+      render status: 401
+    end
+  end
+
+  def send_invitation
+    if current_user.role_head? || current_user.id == @user.matchmaker_id || current_user.id == @user.id
+      PostMailer.invite(@user, current_user).deliver
     else
       render status: 401
     end
