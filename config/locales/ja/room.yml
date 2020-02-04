@@ -25,7 +25,7 @@ ja:
         study: '勉強会'
   views:
     room:
-      list: "イベント一覧"
+      list: "イベント"
       all: "全て"
       available: "参加可能"
       mylist: "参加予定"
