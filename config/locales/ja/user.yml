@@ -5,6 +5,7 @@ ja:
     attributes:
       user:
         id: 'Id'
+        status: '会員ｽﾃｰﾀｽ'
         email: 'Eメール'
         nickname: 'ﾆｯｸﾈｰﾑ'
         name: '氏名'
@@ -58,6 +59,11 @@ ja:
         password_confirmation: 'パスワード（確認用）'
   enum:
     user:
+      status:
+        check_self: '本人入力中'
+        check_matchmaker: '仲人審査中'
+        check_head: '本部審査中'
+        active: '有効'
       sex:
         male: '男性'
         female: '女性'
@@ -92,10 +98,11 @@ ja:
   views:
     user:
       basic: '基本情報'
+      roles: '会員種別'
       comment: 'コメント'
       location: '住所・電話'
       members: '会員管理'
-      roles: '婚活情報'
+      marital: '婚活情報'
       misc: 'その他'
       religion: '宗教'
       physical: '健康'
@@ -125,3 +132,8 @@ ja:
       back: '一覧へ戻る'
       new: '会員登録'
       matchmaker: '仲人'
+      submit: '確定する'
+      retract: '差し戻す'
+      confirm_submit: 'この情報で確定しますか?'
+      confirm_retract: '差し戻しますか?'
+      waiting_list: '許可待ちリスト'

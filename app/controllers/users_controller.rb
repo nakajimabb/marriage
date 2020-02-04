@@ -67,7 +67,9 @@ class UsersController < ApplicationController
   def index
     if current_user.role_head?
       attrs = current_user.list_attributes
-      users = User.all.map{ |user| attrs.map { |c| [c, user.try(c)] }.to_h }
+      users = User.all
+      users = users.where(status: params[:status]) if params[:status]
+      users = users.map{ |user| attrs.map { |c| [c, user.try(c)] }.to_h }
       render json: {users: users}
     else
       render status: 401
@@ -120,7 +122,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if current_user.role_head? || current_user.id == @user.matchmaker_id
+    if current_user.role_head? || current_user.id == @user.matchmaker_id || current_user.id == @user.id
       p = user_params(@user)
       if p[:password].blank? && p[:password_confirmation].blank?
         p.delete(:password)
@@ -135,19 +137,6 @@ class UsersController < ApplicationController
       end
     else
       render status: 401
-    end
-  end
-
-  def update_self
-    p = user_params(current_user)
-    if p[:password].blank? && p[:password_confirmation].blank?
-      p.delete(:password)
-      p.delete(:password_confirmation)
-    end
-    if current_user.update(p)
-      render status: 200, json: {user: current_user}
-    else
-      render status: 500, json: {errors: current_user.errors}
     end
   end
 

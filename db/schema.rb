@@ -178,6 +178,7 @@ ActiveRecord::Schema.define(version: 2019_12_10_053541) do
     t.text "tokens"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "status", limit: 1, null: false, unsigned: true
     t.string "first_name", limit: 64
     t.string "last_name", limit: 64
     t.string "first_name_kana", limit: 64

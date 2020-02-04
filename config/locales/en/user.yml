@@ -5,6 +5,7 @@ en:
     attributes:
       user:
         id: 'Id'
+        status: 'status'
         email: 'Email'
         nickname: 'Nickname'
         name: 'Name'
@@ -58,6 +59,11 @@ en:
         password_confirmation: 'Password confirmation'
   enum:
     user:
+      status:
+        check_self: 'edit Self'
+        check_matchmaker: 'edit Matchmaker'
+        check_head: 'verify Head'
+        active: 'active'
       sex:
         male: 'Male'
         female: 'Female'
@@ -92,10 +98,11 @@ en:
   views:
     user:
       basic: 'Basic'
+      roles: 'Roles'
       comment: 'Comment'
       location: 'Location'
       members: "Members"
-      roles: 'Roles'
+      marital: 'Marital info'
       misc: 'Miscellaneous'
       religion: 'Religion'
       physical: 'Physical info'
@@ -125,3 +132,8 @@ en:
       back: 'Back to list'
       new: 'new User'
       matchmaker: 'Matchmaker'
+      submit: 'Submit'
+      retract: 'Retract'
+      confirm_submit: 'Are you sure?'
+      confirm_retract: 'Are you sure?'
+      waiting_list: 'Waiting list'

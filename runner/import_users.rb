@@ -9,7 +9,7 @@ CSV.foreach(file_name, {encoding: 'BOM|UTF-8',}) do |row|
   if row_num == 0
     header = row
   else
-    params = {lang: :ja, country: :jpn}
+    params = {lang: :ja, country: :jpn, status: :active}
     header.each_with_index do |key, i|
       column = key.strip.to_sym
       case column

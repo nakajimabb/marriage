@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   has_many :eval_partners, dependent: :destroy
   has_one :requirement, dependent: :destroy
 
+  enum status: {check_self: 1, check_matchmaker: 2, check_head: 3, active: 4}
   enum sex: {male: 1, female: 2}
   enum religion: {christ: 1, buddhism: 2, islam: 3, hindu: 4, shinto: 5, taoism: 6, newage:7, secular: 8, other_religion: 10}
   enum blood: {type_a: 1, type_b: 2, type_o: 3, type_ab: 4}
@@ -29,6 +30,7 @@ class User < ActiveRecord::Base
   enum country: Country::CODES
   enum prefecture: Prefecture::CODES
 
+  validates :status, presence: true
   validates :nickname, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
   validates :sex, presence: true
@@ -48,8 +50,8 @@ class User < ActiveRecord::Base
   end
 
   def registrable_attributes(user)
-    if role_head? || (role_matchmaker? && (user.nil? || user.matchmaker_id == self.id))
-      attrs = %i(nickname email first_name last_name first_name_kana last_name_kana
+    if role_head? || (role_matchmaker? && (user.nil? || user.matchmaker_id == self.id)) || (user.id == self.id)
+      attrs = %i(status nickname email first_name last_name first_name_kana last_name_kana
                 first_name_en last_name_en sex birthday tel fax mobile
                 lang country zip prefecture city street building
                 religion sect church baptized baptized_year
@@ -59,8 +61,6 @@ class User < ActiveRecord::Base
       if role_head?
         attrs += %i(role_matchmaker matchmaker_id gene_partner_id)
       end
-    elsif user.id == self.id
-      attrs = %i(lang bio remark password password_confirmation)
     else
       attrs = []
     end
@@ -69,7 +69,7 @@ class User < ActiveRecord::Base
 
   def list_attributes
     if role_head? || role_matchmaker?
-      attrs = %i(id nickname first_name last_name first_name_kana last_name_kana member_sharing
+      attrs = %i(id status nickname first_name last_name first_name_kana last_name_kana member_sharing
                 sex age religion prefecture role_courtship role_matchmaker bio avatar_url)
     else
       attrs = %i(nickname sex age religion prefecture bio role_courtship
@@ -79,7 +79,7 @@ class User < ActiveRecord::Base
   end
 
   def public_attributes
-    %i(nickname id sex age prefecture bio role_courtship
+    %i(status nickname id sex age prefecture bio role_courtship
       blood weight height drinking smoking diseased disease_name
       religion sect church baptized baptized_year
       job education income hobby bio remark marital_status
