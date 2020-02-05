@@ -102,7 +102,10 @@ class UsersController < ApplicationController
       @user.created_by_id = @user.updated_by_id = @user.matchmaker_id = current_user.id
       if @user.save
         user = @user.attributes
-        user[:avatar_url] = @user.avatar_url
+        additional_attrs = [:courtships_size, :avatar_url, :identification_url, :singleness_url, :revenue_url]
+        additional_attrs.each do |attr|
+          user[attr] = @user.try(attr)
+        end
         render status: 200, json: {user: user}
       else
         render status: 500, json: {errors: @user.errors}
@@ -115,8 +118,10 @@ class UsersController < ApplicationController
   def edit
     if current_user.role_head? || current_user.id == @user.matchmaker_id
       user = @user.attributes
-      user[:courtships_size] = @user.courtships_size
-      user[:avatar_url] = @user.avatar_url
+      additional_attrs = [:courtships_size, :avatar_url, :identification_url, :singleness_url, :revenue_url]
+      additional_attrs.each do |attr|
+        user[attr] = @user.try(attr)
+      end
       matchmakers = User.where(role_matchmaker: true)
       matchmakers = matchmakers.map{ |user| [:id, :full_name].map { |c| [c, user.try(c)] }.to_h }
       render json: {user: user, matchmakers: matchmakers, user_friend: current_user.user_friend(@user)}
@@ -136,7 +141,10 @@ class UsersController < ApplicationController
       @user.updated_by_id = current_user.id if @user.changes.present?
       if @user.save
         user = @user.attributes
-        user[:avatar_url] = @user.avatar_url
+        additional_attrs = [:courtships_size, :avatar_url, :identification_url, :singleness_url, :revenue_url]
+        additional_attrs.each do |attr|
+          user[attr] = @user.try(attr)
+        end
         render status: 200, json: {user: user}
       else
         render status: 500, json: {errors: @user.errors}

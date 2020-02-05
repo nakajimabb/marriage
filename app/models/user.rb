@@ -9,6 +9,9 @@ class User < ActiveRecord::Base
   include Rails.application.routes.url_helpers
 
   has_one_attached :avatar
+  has_one_attached :identification
+  has_one_attached :singleness
+  has_one_attached :revenue
   belongs_to :matchmaker, class_name: 'User', foreign_key: :matchmaker_id, optional: true
   belongs_to :created_by, class_name: 'User', foreign_key: :created_by_id, optional: true
   belongs_to :updated_by, class_name: 'User', foreign_key: :updated_by_id, optional: true
@@ -62,7 +65,8 @@ class User < ActiveRecord::Base
                 religion sect church baptized baptized_year
                 role_courtship marital_status bio remark_self remark_matchmaker member_sharing
                 income drinking smoking weight height job education hobby blood
-                diseased disease_name password password_confirmation avatar)
+                diseased disease_name password password_confirmation
+                avatar identification singleness revenue)
       if role_head?
         attrs += %i(role_matchmaker matchmaker_id gene_partner_id)
       end
@@ -94,6 +98,18 @@ class User < ActiveRecord::Base
 
   def avatar_url
     avatar.attached? ?  url_for(avatar) : nil
+  end
+
+  def identification_url
+    identification.attached? ?  url_for(identification) : nil
+  end
+
+  def singleness_url
+    singleness.attached? ?  url_for(singleness) : nil
+  end
+
+  def revenue_url
+    revenue.attached? ?  url_for(revenue) : nil
   end
 
   def full_name

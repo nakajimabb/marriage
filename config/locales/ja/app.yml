@@ -19,6 +19,7 @@ ja:
       back: '戻る'
       back_to: '{{page}}へ戻る'
       human_number_unit: '人'
+      none: 'なし'
   errors:
     app:
       occurred: 'エラーが発生しました。'

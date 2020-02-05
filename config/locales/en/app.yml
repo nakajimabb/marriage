@@ -19,6 +19,7 @@ en:
       back: 'Back'
       back_to: 'Back to {{page}}'
       human_number_unit: ''
+      none: 'None'
   errors:
     app:
       occurred: 'Error has occurred.'
