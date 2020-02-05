@@ -60,7 +60,7 @@ class User < ActiveRecord::Base
                 first_name_en last_name_en sex birthday tel fax mobile
                 lang country zip prefecture city street building
                 religion sect church baptized baptized_year
-                role_courtship marital_status bio remark member_sharing
+                role_courtship marital_status bio remark_self remark_matchmaker member_sharing
                 income drinking smoking weight height job education hobby blood
                 diseased disease_name password password_confirmation avatar)
       if role_head?
@@ -87,7 +87,7 @@ class User < ActiveRecord::Base
     %i(status nickname id sex age prefecture bio role_courtship
       blood weight height drinking smoking diseased disease_name
       religion sect church baptized baptized_year
-      job education income hobby bio remark marital_status
+      job education income hobby bio remark_self remark_matchmaker marital_status
       role_courtship role_matchmaker birthday
       courtships_size member_sharing avatar_url)
   end

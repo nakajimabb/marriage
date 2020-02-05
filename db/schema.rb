@@ -219,7 +219,8 @@ ActiveRecord::Schema.define(version: 2019_12_10_053541) do
     t.integer "marital_status", limit: 1
     t.boolean "diseased"
     t.string "disease_name", limit: 64
-    t.text "remark"
+    t.text "remark_self"
+    t.text "remark_matchmaker"
     t.integer "member_sharing", limit: 1
     t.bigint "matchmaker_id"
     t.bigint "created_by_id"

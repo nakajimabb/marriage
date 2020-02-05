@@ -37,7 +37,8 @@ en:
         role_matchmaker: 'act as Matchmaker'
         matchmaker_id: 'Matchmaker'
         gene_partner_id: 'GenePartnerID'
-        remark: 'self Introduction'
+        remark_self: 'self Introduction'
+        remark_matchmaker: "matchmaker's Introduction"
         job: 'Job'
         income: 'Income'
         education: 'Education'
