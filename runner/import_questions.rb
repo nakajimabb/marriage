@@ -1,4 +1,4 @@
-# rails runner runner/import_questions.rb runner/questions.csv family_relationship
+# rails runner runner/import_questions.rb runner/family_relationship.csv family_relationship
 require 'csv'
 
 file_name = ARGV[0]

@@ -37,6 +37,11 @@ class User < ActiveRecord::Base
   validates :height, numericality: { only_integer: true, greater_than: 0, less_than: 256 }, allow_blank: true
   validates :weight, numericality: { only_integer: true, greater_than: 0, less_than: 256 }, allow_blank: true
 
+  SEARCHABLE_EQ_ATTRIBUTES = %i(status sex lang country prefecture religion baptized drinking smoking
+                                role_courtship role_matchmaker role_head blood marital_status diseased
+                                member_sharing matchmaker_id created_by_id updated_by_id)
+
+
   def self.prefecture_name(code)
     I18n.t('prefecture.' + code.to_s)
   end

@@ -68,7 +68,9 @@ class UsersController < ApplicationController
     if current_user.role_head?
       attrs = current_user.list_attributes
       users = User.all
-      users = users.where(status: params[:status]) if params[:status]
+      User::SEARCHABLE_EQ_ATTRIBUTES.each do |attr|
+        users = users.where(attr => params[attr]) if params[attr]
+      end
       users = users.map{ |user| attrs.map { |c| [c, user.try(c)] }.to_h }
       render json: {users: users}
     else
@@ -99,7 +101,9 @@ class UsersController < ApplicationController
       @user = User.new(user_params(nil))
       @user.created_by_id = @user.updated_by_id = @user.matchmaker_id = current_user.id
       if @user.save
-        render status: 200, json: {user: @user}
+        user = @user.attributes
+        user[:avatar_url] = @user.avatar_url
+        render status: 200, json: {user: user}
       else
         render status: 500, json: {errors: @user.errors}
       end
@@ -131,7 +135,9 @@ class UsersController < ApplicationController
       @user.assign_attributes(p)
       @user.updated_by_id = current_user.id if @user.changes.present?
       if @user.save
-        render status: 200, json: {user: @user}
+        user = @user.attributes
+        user[:avatar_url] = @user.avatar_url
+        render status: 200, json: {user: user}
       else
         render status: 500, json: {errors: @user.errors}
       end
