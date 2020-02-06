@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     get 'users/viewable'
     get 'users/:id/get', to: 'users#get'
     get 'users/:id/partner_matches', to: 'users#partner_matches'
-    get 'users/permitted_users'
+    get 'users/my_partner_matches'
     post 'users/:id/send_invitation', to: 'users#send_invitation'
     resources :users, :only => [:index, :show, :edit, :create, :update]
 

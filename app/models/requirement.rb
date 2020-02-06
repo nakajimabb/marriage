@@ -48,11 +48,11 @@ class Requirement < ApplicationRecord
   end
 
   def self.matches(user, requirement)
-    if user && user.matchmaker_id && user.role_courtship? && requirement
+    if user && user.matchmaker_id && user.role_courtship?
       matchmaker = user.matchmaker
       sex = user.male? ? :female : :male
       users = matchmaker.viewables.where(sex: sex)
-      if requirement.required_age?
+      if requirement&.required_age?
         if requirement.min_age
           users = users.where('birthday < ?', requirement.min_age.years.before.to_date)
         end
@@ -60,17 +60,17 @@ class Requirement < ApplicationRecord
           users = users.where('birthday > ?', requirement.max_age.years.before.to_date)
         end
       end
-      if requirement.required_religion?
+      if requirement&.required_religion?
         if requirement.religion
           users = users.where(religion: requirement.religion)
         end
       end
-      if requirement.required_marital_status?
+      if requirement&.required_marital_status?
         if requirement.marital_status
           users = users.where(marital_status: requirement.marital_status)
         end
       end
-      if requirement.required_income?
+      if requirement&.required_income?
         if requirement.min_income
           users = users.where('income >= ?', requirement.min_income)
         end
@@ -78,7 +78,7 @@ class Requirement < ApplicationRecord
           users = users.where('income <= ?', requirement.max_income)
         end
       end
-      if requirement.required_height?
+      if requirement&.required_height?
         if requirement.min_height
           users = users.where('height >= ?', requirement.min_height)
         end

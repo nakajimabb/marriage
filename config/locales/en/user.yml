@@ -132,7 +132,7 @@ en:
       address: 'Address'
       request_sharing: 'Request sharing members'
       partner_matches: 'Partner matches'
-      permitted_users: 'Selected list'
+      my_partner_matches: 'my Partner matches'
       back: 'Back to list'
       new: 'new User'
       matchmaker: 'Matchmaker'

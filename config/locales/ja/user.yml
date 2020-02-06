@@ -132,7 +132,7 @@ ja:
       address: '住所'
       request_sharing: '会員共有のリクエストを送る'
       partner_matches: '相性マッチング'
-      permitted_users: '候補者一覧'
+      my_partner_matches: 'パートナーを探す'
       back: '一覧へ戻る'
       new: '会員登録'
       matchmaker: '仲人'
