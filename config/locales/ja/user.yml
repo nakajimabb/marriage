@@ -111,7 +111,7 @@ ja:
       religion: '宗教'
       physical: '健康'
       profile: 'プロフィール'
-      list: "ユーザ一管理"
+      list: "会員管理"
       courtship_menu: '婚活メニュー'
       matchmaker_menu: '仲人メニュー'
       head_menu: '本部メニュー'
@@ -140,7 +140,7 @@ ja:
       retract: '差し戻す'
       confirm_submit: 'この情報で確定しますか?'
       confirm_retract: '差し戻しますか?'
-      waiting_users: '許可待ちユーザー'
+      waiting_users: '確定待ち会員'
       waiting_members: '許可待ち会員'
       send_invitation: '招待メール'
       sent_invitation: '招待メールを送信しました。'
