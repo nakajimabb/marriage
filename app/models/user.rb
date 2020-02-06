@@ -169,7 +169,7 @@ class User < ActiveRecord::Base
   # method overwrite => add avatar_url
   def token_validation_response
     response = super
-    additional_attrs = [] #[:courtships_size, :avatar_url, :identification_url, :singleness_url, :revenue_url]
+    additional_attrs = [:courtships_size, :avatar_url]
     additional_attrs.each do |attr|
       response[attr] = self.try(attr)
     end
