@@ -3,73 +3,10 @@ class UsersController < ApplicationController
 
   ADDITIONAL_ATTRIBUTES = %i(courtships_size avatar_url identification_url singleness_url revenue_url image_urls)
 
-  def partner_matches
-    if current_user.role_head? || (current_user.role_matchmaker? && @user.matchmaker_id == current_user.id)
-      attrs = current_user.public_attributes
-      users = @user.partner_matches.select{ |u| r = u.requirement; (!r || r.matched?(@user)); }
-      users = users&.map{ |user| attrs.map { |c| [c, user.try(c)] }.to_h }
-      users.each do |user|
-        eval_partner = @user.eval_partners.find_by(partner_id: user[:id])
-        user[:permitted] = eval_partner&.permitted
-        user[:requirement_score] = eval_partner&.requirement_score
-      end
-      render json: {users: users}
-    else
-      render status: 401
-    end
-  end
-
-  def permitted_users
-    if current_user.role_courtship?
-      attrs = current_user.public_attributes
-      partner_ids = current_user.eval_partners.where(permitted: true).pluck(:partner_id)
-      sex = current_user.male? ? :female : :male
-      users = User.where(id: partner_ids, sex: sex, role_courtship: true)
-      users = users.select{ |u| r = u.requirement; (!r || r.matched?(current_user)); }
-      users = users&.map{ |user| attrs.map { |c| [c, user.try(c)] }.to_h }
-      render json: {users: users}
-    else
-      render status: 401
-    end
-  end
-
-  def members
-    if current_user.role_matchmaker?
-      attrs = current_user.list_attributes
-      users = current_user.members.map{ |user| attrs.map { |c| [c, user.try(c)] }.to_h }
-      render json: {users: users}
-    else
-      render status: 401
-    end
-  end
-
-  def matchmakers
-    if current_user.role_matchmaker?
-      attrs = current_user.list_attributes
-      friend_ids = current_user.user_friends.where(status: :accepted).pluck(:companion_id)
-      users = User.where(role_matchmaker: true)
-                  .map{ |user| (attrs.map { |c| [c, user.try(c)] } + [[:friend, friend_ids.include?(user.id)]]).to_h }
-      render json: {users: users}
-    else
-      render status: 401
-    end
-  end
-
-  def viewable
-    if current_user.role_matchmaker?
-      attrs = current_user.public_attributes
-      users = current_user.viewables
-      users = users.map{ |user| attrs.map { |c| [c, user.try(c)] }.to_h }
-      render json: {users: users}
-    else
-      render status: 401
-    end
-  end
-
   def index
     if current_user.role_head?
       attrs = current_user.list_attributes
-      users = User.all
+      users = User.with_attached_avatar
       User::SEARCHABLE_EQ_ATTRIBUTES.each do |attr|
         users = users.where(attr => params[attr]) if params[attr]
       end
@@ -153,6 +90,73 @@ class UsersController < ApplicationController
       else
         render status: 500, json: {errors: @user.errors}
       end
+    else
+      render status: 401
+    end
+  end
+
+  def partner_matches
+    if current_user.role_head? || (current_user.role_matchmaker? && @user.matchmaker_id == current_user.id)
+      attrs = current_user.public_attributes
+      users = @user.partner_matches.select{ |u| r = u.requirement; (!r || r.matched?(@user)); }
+      users = users&.map{ |user| attrs.map { |c| [c, user.try(c)] }.to_h }
+      users.each do |user|
+        eval_partner = @user.eval_partners.find_by(partner_id: user[:id])
+        user[:permitted] = eval_partner&.permitted
+        user[:requirement_score] = eval_partner&.requirement_score
+      end
+      render json: {users: users}
+    else
+      render status: 401
+    end
+  end
+
+  def permitted_users
+    if current_user.role_courtship?
+      attrs = current_user.public_attributes
+      partner_ids = current_user.eval_partners.where(permitted: true).pluck(:partner_id)
+      sex = current_user.male? ? :female : :male
+      users = User.where(id: partner_ids, sex: sex, role_courtship: true)
+      users = users.select{ |u| r = u.requirement; (!r || r.matched?(current_user)); }
+      users = users&.map{ |user| attrs.map { |c| [c, user.try(c)] }.to_h }
+      render json: {users: users}
+    else
+      render status: 401
+    end
+  end
+
+  def members
+    if current_user.role_matchmaker?
+      attrs = current_user.list_attributes
+      users = current_user.members
+      User::SEARCHABLE_EQ_ATTRIBUTES.each do |attr|
+        users = users.where(attr => params[attr]) if params[attr]
+      end
+      users = users.map{ |user| attrs.map { |c| [c, user.try(c)] }.to_h }
+      render json: {users: users}
+    else
+      render status: 401
+    end
+  end
+
+  def matchmakers
+    if current_user.role_matchmaker?
+      attrs = current_user.list_attributes
+      friend_ids = current_user.user_friends.where(status: :accepted).pluck(:companion_id)
+      users = User.where(role_matchmaker: true)
+                  .map{ |user| (attrs.map { |c| [c, user.try(c)] } + [[:friend, friend_ids.include?(user.id)]]).to_h }
+      render json: {users: users}
+    else
+      render status: 401
+    end
+  end
+
+  def viewable
+    if current_user.role_matchmaker?
+      attrs = current_user.public_attributes
+      users = current_user.viewables
+      users = users.map{ |user| attrs.map { |c| [c, user.try(c)] }.to_h }
+      render json: {users: users}
     else
       render status: 401
     end
