@@ -35,11 +35,35 @@ class User < ActiveRecord::Base
   enum prefecture: Prefecture::CODES
 
   validates :status, presence: true
-  validates :nickname, presence: true, uniqueness: true
+  validates :nickname, presence: true, uniqueness: true, format: { with: /\A[a-z0-9]+\z/, message: "は半角英数字です"}
   validates :email, presence: true, uniqueness: true
   validates :sex, presence: true
   validates :height, numericality: { only_integer: true, greater_than: 0, less_than: 256 }, allow_blank: true
   validates :weight, numericality: { only_integer: true, greater_than: 0, less_than: 256 }, allow_blank: true
+
+  validates :first_name, presence: true, unless: :check_self?
+  validates :last_name, presence: true, unless: :check_self?
+  validates :first_name_kana, presence: true, unless: :check_self?
+  validates :last_name_kana, presence: true, unless: :check_self?
+  validates :marital_status, presence: true, unless: :check_self?
+  validates :marital_status, presence: true, unless: :check_self?
+  validates :birthday, presence: true, unless: :check_self?
+  validates :lang, presence: true, unless: :check_self?
+  validates :country, presence: true, unless: :check_self?
+  validates :zip, presence: true, unless: :check_self?
+  validates :prefecture, presence: true, unless: :check_self?
+  validates :city, presence: true, unless: :check_self?
+  validates :street, presence: true, unless: :check_self?
+  validates :religion, presence: true, unless: :check_self?
+  validates :bio, presence: true, unless: :check_self?
+  validates :weight, presence: true, unless: :check_self?
+  validates :height, presence: true, unless: :check_self?
+  validates :remark_self, presence: true, unless: :check_self?
+  validates :drinking, presence: true, unless: :check_self?
+  validates :smoking, presence: true, unless: :check_self?
+  validates :job, presence: true, unless: :check_self?
+  validates :education, presence: true, unless: :check_self?
+  validates :income, presence: true, unless: :check_self?
 
   SEARCHABLE_EQ_ATTRIBUTES = %i(status sex lang country prefecture religion baptized drinking smoking
                                 role_courtship role_matchmaker role_head blood marital_status diseased
