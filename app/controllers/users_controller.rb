@@ -54,7 +54,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    if current_user.role_head? || current_user.id == @user.matchmaker_id
+    if current_user.role_head? || current_user.id == @user.matchmaker_id || current_user.id == @user.id
       user = @user.attributes
       ADDITIONAL_ATTRIBUTES.each do |attr|
         user[attr] = @user.try(attr)
@@ -141,10 +141,14 @@ class UsersController < ApplicationController
 
   def matchmakers
     if current_user.role_matchmaker?
-      attrs = current_user.list_attributes
-      friend_ids = current_user.user_friends.where(status: :accepted).pluck(:companion_id)
-      users = User.where(role_matchmaker: true)
-                  .map{ |user| (attrs.map { |c| [c, user.try(c)] } + [[:friend, friend_ids.include?(user.id)]]).to_h }
+      if current_user.active?
+        attrs = current_user.list_attributes
+        friend_ids = current_user.user_friends.where(status: :accepted).pluck(:companion_id)
+        users = User.active.where(role_matchmaker: true)
+                    .map{ |user| (attrs.map { |c| [c, user.try(c)] } + [[:friend, friend_ids.include?(user.id)]]).to_h }
+      else
+        users = User.none
+      end
       render json: {users: users}
     else
       render status: 401

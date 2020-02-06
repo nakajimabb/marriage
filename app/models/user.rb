@@ -162,25 +162,29 @@ class User < ActiveRecord::Base
   end
 
   def viewable_matchmaker_ids(delete_self=true)
-    if role_matchmaker?
-      matchmaker_ids = User.where(role_matchmaker: true, member_sharing: :member_public).pluck(:id)
-      matchmaker_ids += user_friends.pluck(:companion_id)
+    if active? && role_matchmaker?
+      matchmaker_ids = User.active.where(role_matchmaker: true, member_sharing: :member_public).pluck(:id)
+      matchmaker_ids += user_friends.accepted.joins(:companion).where(users: {status: :active}).pluck(:companion_id)
       matchmaker_ids.delete(self.id) if delete_self
       matchmaker_ids.uniq
+    else
+      []
     end
   end
 
   def viewable?(user)
-    if role_matchmaker?
+    if active? && user.active? && role_matchmaker?
       matchmaker_ids = viewable_matchmaker_ids(false)
       matchmaker_ids&.include?(user.matchmaker_id)
     end
   end
 
   def viewables
-    if role_matchmaker?
+    if active? && role_matchmaker?
       matchmaker_ids = viewable_matchmaker_ids
-      User.where(role_courtship: true, matchmaker_id: matchmaker_ids)
+      User.active.where(role_courtship: true, matchmaker_id: matchmaker_ids)
+    else
+      User.none
     end
   end
 
