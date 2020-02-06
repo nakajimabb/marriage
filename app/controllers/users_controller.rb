@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :get, :partner_matches, :send_invitation]
 
+  ADDITIONAL_ATTRIBUTES = %i(courtships_size avatar_url identification_url singleness_url revenue_url image_urls)
+
   def partner_matches
     if current_user.role_head? || (current_user.role_matchmaker? && @user.matchmaker_id == current_user.id)
       attrs = current_user.public_attributes
@@ -102,8 +104,7 @@ class UsersController < ApplicationController
       @user.created_by_id = @user.updated_by_id = @user.matchmaker_id = current_user.id
       if @user.save
         user = @user.attributes
-        additional_attrs = [:courtships_size, :avatar_url, :identification_url, :singleness_url, :revenue_url]
-        additional_attrs.each do |attr|
+        ADDITIONAL_ATTRIBUTES.each do |attr|
           user[attr] = @user.try(attr)
         end
         render status: 200, json: {user: user}
@@ -118,8 +119,7 @@ class UsersController < ApplicationController
   def edit
     if current_user.role_head? || current_user.id == @user.matchmaker_id
       user = @user.attributes
-      additional_attrs = [:courtships_size, :avatar_url, :identification_url, :singleness_url, :revenue_url]
-      additional_attrs.each do |attr|
+      ADDITIONAL_ATTRIBUTES.each do |attr|
         user[attr] = @user.try(attr)
       end
       matchmakers = User.where(role_matchmaker: true)
@@ -137,12 +137,16 @@ class UsersController < ApplicationController
         p.delete(:password)
         p.delete(:password_confirmation)
       end
+      # TODO: 個別に処理しないと、既存データがクリアされてしまう
+      if p[:images].present?
+        @user.images.attach(p[:images])
+        p.delete(:images)
+      end
       @user.assign_attributes(p)
       @user.updated_by_id = current_user.id if @user.changes.present?
       if @user.save
         user = @user.attributes
-        additional_attrs = [:courtships_size, :avatar_url, :identification_url, :singleness_url, :revenue_url]
-        additional_attrs.each do |attr|
+        ADDITIONAL_ATTRIBUTES.each do |attr|
           user[attr] = @user.try(attr)
         end
         render status: 200, json: {user: user}
@@ -170,6 +174,6 @@ private
 
   def user_params(user)
     attrs = current_user.registrable_attributes(user)
-    params.fetch(:user, {}).permit(attrs)
+    params.fetch(:user, {}).permit(attrs, images: [])
   end
 end

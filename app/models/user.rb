@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_one_attached :identification
   has_one_attached :singleness
   has_one_attached :revenue
+  has_many_attached :images
   belongs_to :matchmaker, class_name: 'User', foreign_key: :matchmaker_id, optional: true
   belongs_to :created_by, class_name: 'User', foreign_key: :created_by_id, optional: true
   belongs_to :updated_by, class_name: 'User', foreign_key: :updated_by_id, optional: true
@@ -93,7 +94,7 @@ class User < ActiveRecord::Base
       religion sect church baptized baptized_year
       job education income hobby bio remark_self remark_matchmaker marital_status
       role_courtship role_matchmaker birthday
-      courtships_size member_sharing avatar_url)
+      courtships_size member_sharing avatar_url image_urls)
   end
 
   def avatar_url
@@ -110,6 +111,10 @@ class User < ActiveRecord::Base
 
   def revenue_url
     revenue.attached? ?  url_for(revenue) : nil
+  end
+
+  def image_urls
+    images.attached? ? images.map{ |image| url_for(image) } : nil
   end
 
   def full_name
@@ -164,8 +169,10 @@ class User < ActiveRecord::Base
   # method overwrite => add avatar_url
   def token_validation_response
     response = super
-    response[:courtships_size] = self.courtships_size
-    response[:avatar_url] = self.avatar_url
+    additional_attrs = [] #[:courtships_size, :avatar_url, :identification_url, :singleness_url, :revenue_url]
+    additional_attrs.each do |attr|
+      response[attr] = self.try(attr)
+    end
     if self.role_matchmaker?
       response[:notification_count] = UserFriend.where(companion_id: self.id, status: :waiting).size
     end
