@@ -9,7 +9,10 @@ CSV.foreach(file_name, {encoding: 'BOM|UTF-8',}) do |row|
   if row_num == 0
     header = row
   else
-    params = {lang: :ja, country: :jpn, status: :active}
+    params = {lang: :ja, country: :jpn, status: :active,
+              drinking: :dont_drink, smoking: :dont_smoke, marital_status: :first_marriage,
+              bio: 'xxx', remark_self: 'xxx', education: 'xxx', job: 'SE', income: 500}
+
     header.each_with_index do |key, i|
       column = key.strip.to_sym
       case column
@@ -42,7 +45,10 @@ CSV.foreach(file_name, {encoding: 'BOM|UTF-8',}) do |row|
       end
     end
     params[:password] = params[:password_confirmation] = 'password'
-    User.create(params)
+    user = User.new(params)
+    if !user.save
+      puts user.errors.full_messages
+    end
   end
   row_num += 1
 end

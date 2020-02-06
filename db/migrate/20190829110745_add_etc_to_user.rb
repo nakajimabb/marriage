@@ -43,7 +43,7 @@ class AddEtcToUser < ActiveRecord::Migration[6.0]
     add_column :users, :disease_name, :string, limit: 64
     add_column :users, :remark_self, :text
     add_column :users, :remark_matchmaker, :text
-    add_column :users, :member_sharing, :tinyint
+    add_column :users, :member_sharing, :tinyint, null: false, default: 1
     add_reference :users, :matchmaker, foreign_key: { to_table: :users }
     add_reference :users, :created_by, foreign_key: { to_table: :users }
     add_reference :users, :updated_by, foreign_key: { to_table: :users }

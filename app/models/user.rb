@@ -30,14 +30,15 @@ class User < ActiveRecord::Base
   enum drinking: {dont_drink: 1, do_drink: 2}
   enum smoking: {dont_smoke: 1, do_smoke: 2}
   enum marital_status: { first_marriage: 1, second_marriage: 2, married: 5 }
-  enum member_sharing: { member_public: 1, shared_friend: 2 }
+  enum member_sharing: { shared_friend: 1, member_public: 2 }
   enum country: Country::CODES
   enum prefecture: Prefecture::CODES
 
   validates :status, presence: true
-  validates :nickname, presence: true, uniqueness: true, format: { with: /\A[a-z0-9]+\z/, message: "は半角英数字です"}
+  validates :nickname, presence: true, uniqueness: true, length: { minimum: 3, maximum: 20 }, format: { with: /\A[a-z0-9]+\z/, message: "は半角英数字です"}
   validates :email, presence: true, uniqueness: true
   validates :sex, presence: true
+  validates :member_sharing, presence: true
   validates :height, numericality: { only_integer: true, greater_than: 0, less_than: 256 }, allow_blank: true
   validates :weight, numericality: { only_integer: true, greater_than: 0, less_than: 256 }, allow_blank: true
 
@@ -45,7 +46,6 @@ class User < ActiveRecord::Base
   validates :last_name, presence: true, unless: :check_self?
   validates :first_name_kana, presence: true, unless: :check_self?
   validates :last_name_kana, presence: true, unless: :check_self?
-  validates :marital_status, presence: true, unless: :check_self?
   validates :marital_status, presence: true, unless: :check_self?
   validates :birthday, presence: true, unless: :check_self?
   validates :lang, presence: true, unless: :check_self?
@@ -56,8 +56,6 @@ class User < ActiveRecord::Base
   validates :street, presence: true, unless: :check_self?
   validates :religion, presence: true, unless: :check_self?
   validates :bio, presence: true, unless: :check_self?
-  validates :weight, presence: true, unless: :check_self?
-  validates :height, presence: true, unless: :check_self?
   validates :remark_self, presence: true, unless: :check_self?
   validates :drinking, presence: true, unless: :check_self?
   validates :smoking, presence: true, unless: :check_self?
