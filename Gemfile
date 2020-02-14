@@ -43,8 +43,11 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # devise関連
 gem 'devise'
 gem 'devise_token_auth'
-gem 'miyabi'
+gem 'devise_invitable'
 
 # aws関連
 gem "aws-sdk-s3", require: false
 gem "aws-ses"
+
+# その他
+gem 'miyabi'

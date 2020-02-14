@@ -126,7 +126,6 @@ en:
       baptism: 'Baptism'
       income_unit: 'dollar'
       public_profile: 'public Profile'
-      add_user: 'Add member'
       page_of: "'s Page"
       edit_self: 'Setting'
       address: 'Address'
@@ -142,7 +141,16 @@ en:
       confirm_retract: 'Are you sure?'
       waiting_users: 'Waiting users'
       waiting_members: 'Waiting members'
-      send_invitation: 'send Invitation'
-      sent_invitation: 'sent Invitation mail'
       certificate: 'Certificate'
       photo: 'Photo'
+      add_user: 'Add member'
+      invite_user: 'Invite member'
+      invite_user_subtitle: 'input email and sex, and send invitation.'
+      send_invitation: 'send Invitation'
+      sent_invitation: 'sent Invitation mail'
+      email_or_nickname: 'Email or nickname'
+      accept_invitation_subtitle: 'input password and accept invitation.'
+      accept_invitation: 'Accept invitation'
+  errors:
+    user:
+      invalid_token: 'invalid Token'

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root 'users#home'
+
   mount_devise_token_auth_for 'User', at: 'auth', controllers: { sessions: 'overrides/sessions' }
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
@@ -10,6 +12,8 @@ Rails.application.routes.draw do
     get 'users/:id/partner_matches', to: 'users#partner_matches'
     get 'users/my_partner_matches'
     post 'users/:id/send_invitation', to: 'users#send_invitation'
+    post 'users/invite', to: 'users#invite'
+    post 'users/accept', to: 'users#accept'
     resources :users, :only => [:index, :show, :edit, :create, :update]
 
     post 'user_friends/request_sharing', to: 'user_friends#request_sharing'

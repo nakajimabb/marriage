@@ -1,7 +1,12 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :get, :partner_matches, :send_invitation]
+  before_action :authenticate_user!, :except => [:accept, :home]
 
   ADDITIONAL_ATTRIBUTES = %i(courtships_size avatar_url identification_url singleness_url revenue_url image_urls)
+
+  def home
+    render plain: root_url
+  end
 
   def index
     if current_user.role_head?
@@ -158,9 +163,50 @@ class UsersController < ApplicationController
     end
   end
 
+  def invite
+    if current_user.role_head? || current_user.role_matchmaker?
+      begin
+        user = User.invite!({ email: params[:email], sex: params[:sex] }, current_user) do |u|
+          u.skip_invitation = true
+        end
+        if user.errors.empty?
+          NotificationMailer.invite_message(user, current_user).deliver
+          user.update_column(:invitation_sent_at, Time.now.utc)
+          render status: 200, json: {user: user}
+        else
+          render status: 500, json: {error: user.errors.full_messages.join(', ')}
+        end
+      rescue => e
+        render status: 503, json: {error: e.message}
+      end
+    else
+      render status: 401
+    end
+  end
+
   def send_invitation
     if current_user.role_head? || current_user.id == @user.matchmaker_id || current_user.id == @user.id
       PostMailer.invite(@user, current_user).deliver
+    else
+      render status: 401
+    end
+  end
+
+  def accept
+    if params[:invitation_token].present? && params[:password].present? && params[:password_confirmation].present?
+      user = User.find_by_invitation_token(params[:invitation_token], true)
+      if user
+        user = User.accept_invitation!(invitation_token: params[:invitation_token],
+                                       password: params[:password],
+                                       password_confirmation: params[:password_confirmation])
+        if user.valid?
+          render status: 200, json: {user: user}
+        else
+          render status: 500, json: {error: user.errors.full_messages.join(', ')}
+        end
+      else
+        render status: 500, json: {error: I18n.t('errors.user.invalid_token')}
+      end
     else
       render status: 401
     end

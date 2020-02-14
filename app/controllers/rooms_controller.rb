@@ -47,7 +47,7 @@ class RoomsController < ApplicationController
       rooms = rooms.map{ |room| room_to_h(room, current_user) }
       render json: {rooms: rooms}
     else
-      render status: 401
+      render json: {rooms: Room.none}
     end
   end
 

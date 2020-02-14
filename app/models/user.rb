@@ -3,7 +3,7 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   include DeviseTokenAuth::Concerns::User
   include Rails.application.routes.url_helpers
@@ -35,7 +35,9 @@ class User < ActiveRecord::Base
   enum prefecture: Prefecture::CODES
 
   validates :status, presence: true
-  validates :nickname, presence: true, uniqueness: true, length: { minimum: 3, maximum: 20 }, format: { with: /\A[a-z0-9]+\z/, message: "は半角英数字です"}
+  validates :nickname, presence: true, uniqueness: true,
+            length: { minimum: 3, maximum: 20 },
+            format: { with: /\A[a-z0-9]+\z/, message: "は半角英数字です"}, unless: :check_self?
   validates :email, presence: true, uniqueness: true
   validates :sex, presence: true
   validates :member_sharing, presence: true
