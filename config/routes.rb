@@ -11,7 +11,6 @@ Rails.application.routes.draw do
     get 'users/:id/get', to: 'users#get'
     get 'users/:id/partner_matches', to: 'users#partner_matches'
     get 'users/my_partner_matches'
-    post 'users/:id/send_invitation', to: 'users#send_invitation'
     post 'users/invite', to: 'users#invite'
     post 'users/accept', to: 'users#accept'
     resources :users, :only => [:index, :show, :edit, :create, :update]

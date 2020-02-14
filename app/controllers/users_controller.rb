@@ -184,14 +184,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def send_invitation
-    if current_user.role_head? || current_user.id == @user.matchmaker_id || current_user.id == @user.id
-      PostMailer.invite(@user, current_user).deliver
-    else
-      render status: 401
-    end
-  end
-
   def accept
     if params[:invitation_token].present? && params[:password].present? && params[:password_confirmation].present?
       user = User.find_by_invitation_token(params[:invitation_token], true)
