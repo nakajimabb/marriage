@@ -144,7 +144,8 @@ en:
       certificate: 'Certificate'
       photo: 'Photo'
       add_user: 'Add member'
-      invite_user: 'Invite member'
+      invite_courtship: 'Invite member'
+      invite_matchmaker: 'Invite matchmaker'
       invite_user_subtitle: 'input email and sex, and send invitation.'
       send_invitation: 'send Invitation'
       sent_invitation: 'sent Invitation mail'
@@ -154,3 +155,4 @@ en:
   errors:
     user:
       invalid_token: 'invalid Token'
+      nickname: ' is permitted only half-width alphanumeric.'

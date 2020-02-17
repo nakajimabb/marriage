@@ -49,12 +49,12 @@ class UsersController < ApplicationController
         ADDITIONAL_ATTRIBUTES.each do |attr|
           user[attr] = @user.try(attr)
         end
-        render status: 200, json: {user: user}
+        render json: {user: user}
       else
         render status: 500, json: {errors: @user.errors}
       end
     else
-      render status: 401
+      render json: {users: User.none}
     end
   end
 
@@ -91,7 +91,7 @@ class UsersController < ApplicationController
         ADDITIONAL_ATTRIBUTES.each do |attr|
           user[attr] = @user.try(attr)
         end
-        render status: 200, json: {user: user}
+        render json: {user: user}
       else
         render status: 500, json: {errors: @user.errors}
       end
@@ -107,7 +107,7 @@ class UsersController < ApplicationController
       users = users&.map{ |user| attrs.map { |c| [c, user.try(c)] }.to_h }
       render json: {users: users}
     else
-      render status: 401
+      render json: {users: User.none}
     end
   end
 
@@ -118,7 +118,7 @@ class UsersController < ApplicationController
       users = users&.map{ |user| attrs.map { |c| [c, user.try(c)] }.to_h }
       render json: {users: users}
     else
-      render status: 401
+      render json: {users: User.none}
     end
   end
 
@@ -132,7 +132,7 @@ class UsersController < ApplicationController
       users = users.map{ |user| attrs.map { |c| [c, user.try(c)] }.to_h }
       render json: {users: users}
     else
-      render status: 401
+      render json: {users: User.none}
     end
   end
 
@@ -148,7 +148,7 @@ class UsersController < ApplicationController
       end
       render json: {users: users}
     else
-      render status: 401
+      render json: {users: User.none}
     end
   end
 
@@ -159,20 +159,28 @@ class UsersController < ApplicationController
       users = users.map{ |user| attrs.map { |c| [c, user.try(c)] }.to_h }
       render json: {users: users}
     else
-      render status: 401
+      render json: {users: User.none}
     end
   end
 
   def invite
     if current_user.role_head? || current_user.role_matchmaker?
       begin
-        user = User.invite!({ email: params[:email], sex: params[:sex] }, current_user) do |u|
+        attrs = { email: params[:email], sex: params[:sex] }
+        if current_user.role_head?
+          attrs[:role_matchmaker] = params[:role_matchmaker]
+        end
+        if params[:role_courtship].present?
+          attrs[:role_courtship] = params[:role_courtship]
+          attrs[:matchmaker_id] = current_user.id
+        end
+        user = User.invite!(attrs.compact, current_user) do |u|
           u.skip_invitation = true
         end
         if user.errors.empty?
           NotificationMailer.invite_message(user, current_user).deliver
           user.update_column(:invitation_sent_at, Time.now.utc)
-          render status: 200, json: {user: user}
+          render json: {user: user}
         else
           render status: 500, json: {error: user.errors.full_messages.join(', ')}
         end
@@ -192,7 +200,7 @@ class UsersController < ApplicationController
                                        password: params[:password],
                                        password_confirmation: params[:password_confirmation])
         if user.valid?
-          render status: 200, json: {user: user}
+          render json: {user: user}
         else
           render status: 500, json: {error: user.errors.full_messages.join(', ')}
         end
