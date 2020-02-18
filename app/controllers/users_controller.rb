@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :get, :partner_matches, :send_invitation]
-  before_action :authenticate_user!, :except => [:accept, :home]
+  before_action :authenticate_user!, :except => [:accept, :reset_password, :send_reset_password, :home]
 
   ADDITIONAL_ATTRIBUTES = %i(courtships_size avatar_url identification_url singleness_url revenue_url image_urls)
 
@@ -199,6 +199,44 @@ class UsersController < ApplicationController
         user = User.accept_invitation!(invitation_token: params[:invitation_token],
                                        password: params[:password],
                                        password_confirmation: params[:password_confirmation])
+        if user.valid?
+          render json: {user: user}
+        else
+          render status: 500, json: {error: user.errors.full_messages.join(', ')}
+        end
+      else
+        render status: 500, json: {error: I18n.t('errors.user.invalid_token')}
+      end
+    else
+      render status: 401
+    end
+  end
+
+  def send_reset_password
+    if params[:email].present?
+      begin
+        user = User.find_by_email(params[:email])
+        if user
+          user.send_reset_password_instructions
+        else
+          render status: 500, json: {error: I18n.t('errors.user.mail_not_exist')}
+        end
+      rescue => e
+        render status: 503, json: {error: e.message}
+      end
+    else
+      render status: 401
+    end
+  end
+
+  def reset_password
+    if params[:reset_password_token].present? && params[:password].present? && params[:password_confirmation].present?
+      user = User.with_reset_password_token(params[:reset_password_token])
+      if user
+        user = User.reset_password_by_token(reset_password_token: params[:reset_password_token],
+                                            password: params[:password],
+                                            password_confirmation: params[:password_confirmation])
+
         if user.valid?
           render json: {user: user}
         else

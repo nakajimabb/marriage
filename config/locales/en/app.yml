@@ -20,6 +20,7 @@ en:
       back_to: 'Back to {{page}}'
       human_number_unit: ''
       none: 'None'
+      sent_mail: 'Sent mail'
   errors:
     app:
       occurred: 'Error has occurred.'

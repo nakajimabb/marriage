@@ -20,6 +20,7 @@ ja:
       back_to: '{{page}}へ戻る'
       human_number_unit: '人'
       none: 'なし'
+      sent_mail: 'メールを送信しました'
   errors:
     app:
       occurred: 'エラーが発生しました。'

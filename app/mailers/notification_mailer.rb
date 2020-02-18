@@ -1,6 +1,11 @@
-class NotificationMailer < ActionMailer::Base
+class NotificationMailer < Devise::Mailer
   default from: 'admin@special4.net'
   include Rails.application.routes.url_helpers
+
+  def reset_password_instructions(record, token, opts={})
+    @change_link = change_password_url(token)
+    super
+  end
 
   def invite_message(user, from_user)
     @user = user
@@ -12,7 +17,12 @@ class NotificationMailer < ActionMailer::Base
   end
 
 private
+
   def invitation_url(token)
     root_url + "#/auth/accept/#{token}"
+  end
+
+  def change_password_url(token)
+    root_url + "#/auth/change-password/#{token}"
   end
 end

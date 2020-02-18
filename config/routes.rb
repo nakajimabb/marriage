@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     get 'users/my_partner_matches'
     post 'users/invite', to: 'users#invite'
     post 'users/accept', to: 'users#accept'
+    post 'users/send_reset_password', to: 'users#send_reset_password'
+    post 'users/reset_password', to: 'users#reset_password'
     resources :users, :only => [:index, :show, :edit, :create, :update]
 
     post 'user_friends/request_sharing', to: 'user_friends#request_sharing'

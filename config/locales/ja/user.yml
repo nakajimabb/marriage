@@ -156,3 +156,4 @@ ja:
     user:
       invalid_token: 'トークンが無効です'
       nickname: 'は半角英数字です'
+      mail_not_exist: '指定されたメールアドレスのアカウントは存在しません。'

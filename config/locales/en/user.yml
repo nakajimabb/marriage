@@ -156,3 +156,4 @@ en:
     user:
       invalid_token: 'invalid Token'
       nickname: ' is permitted only half-width alphanumeric.'
+      mail_not_exist: 'mail not exist.'
