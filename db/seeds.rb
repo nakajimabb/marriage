@@ -8,7 +8,7 @@
 User.create(id: 1,
             code: 'admin',
             email: 'admin@special4.net',
-            status: :active,
+            status: :fixed,
             first_name: '管理者',
             last_name: 'SP4',
             first_name_kana: 'カンリシャ',
