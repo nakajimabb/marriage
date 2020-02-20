@@ -67,7 +67,7 @@ en:
         check_self: 'edit Self'
         check_matchmaker: 'edit Matchmaker'
         check_head: 'verify Head'
-        active: 'active'
+        fixed: 'Fixed'
       sex:
         male: 'Male'
         female: 'Female'

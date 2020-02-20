@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   def index
     if current_user.role_head?
       attrs = current_user.list_attributes
-      users = User.with_attached_avatar
+      users = User.active.with_attached_avatar
       User::SEARCHABLE_EQ_ATTRIBUTES.each do |attr|
         users = users.where(attr => params[attr]) if params[attr]
       end
@@ -101,7 +101,7 @@ class UsersController < ApplicationController
   end
 
   def partner_matches
-    if current_user.active? && (current_user.role_head? || (current_user.role_matchmaker? && @user.matchmaker_id == current_user.id))
+    if current_user.fixed? && (current_user.role_head? || (current_user.role_matchmaker? && @user.matchmaker_id == current_user.id))
       attrs = @user.public_attributes
       users = @user.partner_matches.select{ |u| r = u.requirement; (!r || r.matched?(@user)); }
       users = users&.map{ |user| attrs.map { |c| [c, user.try(c)] }.to_h }
@@ -112,7 +112,7 @@ class UsersController < ApplicationController
   end
 
   def my_partner_matches
-    if current_user.active? && current_user.role_courtship?
+    if current_user.fixed? && current_user.role_courtship?
       attrs = current_user.public_attributes
       users = current_user.partner_matches  #.select{ |u| r = u.requirement; (!r || r.matched?(current_user)); }
       users = users&.map{ |user| attrs.map { |c| [c, user.try(c)] }.to_h }
@@ -125,7 +125,7 @@ class UsersController < ApplicationController
   def members
     if current_user.role_matchmaker?
       attrs = current_user.list_attributes
-      users = current_user.members
+      users = current_user.members.active
       User::SEARCHABLE_EQ_ATTRIBUTES.each do |attr|
         users = users.where(attr => params[attr]) if params[attr]
       end
@@ -138,10 +138,10 @@ class UsersController < ApplicationController
 
   def matchmakers
     if current_user.role_matchmaker?
-      if current_user.active?
+      if current_user.fixed?
         attrs = current_user.list_attributes
         friend_ids = current_user.user_friends.where(status: :accepted).pluck(:companion_id)
-        users = User.active.where(role_matchmaker: true)
+        users = User.fixed.where(role_matchmaker: true)
                     .map{ |user| (attrs.map { |c| [c, user.try(c)] } + [[:friend, friend_ids.include?(user.id)]]).to_h }
       else
         users = User.none

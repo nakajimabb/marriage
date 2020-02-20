@@ -67,7 +67,7 @@ ja:
         check_self: '本人入力中'
         check_matchmaker: '仲人審査中'
         check_head: '本部審査中'
-        active: '有効'
+        fixed: '有効'
       sex:
         male: '男性'
         female: '女性'

@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   has_many :eval_partners, dependent: :destroy
   has_one :requirement, dependent: :destroy
 
-  enum status: {check_self: 1, check_matchmaker: 2, check_head: 3, active: 4}
+  enum status: {check_self: 1, check_matchmaker: 2, check_head: 3, fixed: 4}
   enum sex: {male: 1, female: 2}
   enum religion: {christ: 1, buddhism: 2, islam: 3, hindu: 4, shinto: 5, taoism: 6, newage:7, secular: 8, other_religion: 10}
   enum blood: {type_a: 1, type_b: 2, type_o: 3, type_ab: 4}
@@ -56,15 +56,17 @@ class User < ActiveRecord::Base
   validates :street, presence: true, if: -> { since?(:check_matchmaker) }
   validates :religion, presence: true, if: -> { since?(:check_matchmaker) }
   validates :bio, presence: true, if: -> { since?(:check_matchmaker) }
-  validates :remark_self, presence: true, if: -> { since?(:check_matchmaker) }
-  validates :drinking, presence: true, if: -> { since?(:check_matchmaker) }
-  validates :smoking, presence: true, if: -> { since?(:check_matchmaker) }
   validates :job, presence: true, if: -> { since?(:check_matchmaker) }
-  validates :education, presence: true, if: -> { since?(:check_matchmaker) }
-  validates :income, presence: true, if: -> { since?(:check_matchmaker) }
-  validates :remark_matchmaker, presence: true, if: -> { since?(:check_head) }
+  validates :remark_self, presence: true, if: -> { since?(:check_matchmaker) }
+  validates :drinking, presence: true, if: -> { role_courtship? && since?(:check_matchmaker) }
+  validates :smoking, presence: true, if: -> { role_courtship? && since?(:check_matchmaker) }
+  validates :education, presence: true, if: -> { role_courtship? && since?(:check_matchmaker) }
+  validates :income, presence: true, if: -> { role_courtship? && since?(:check_matchmaker) }
+  validates :remark_matchmaker, presence: true, if: -> { role_courtship? && since?(:check_head) }
 
   before_create :alloc_code
+
+  scope :active, -> { User.where(invitation_token: nil) }
 
   SEARCHABLE_EQ_ATTRIBUTES = %i(status sex lang country prefecture religion baptized drinking smoking
                                 role_courtship role_matchmaker role_head blood marital_status diseased
@@ -176,9 +178,9 @@ class User < ActiveRecord::Base
   end
 
   def viewable_matchmaker_ids(delete_self=true)
-    if active? && role_matchmaker?
-      matchmaker_ids = User.active.where(role_matchmaker: true, member_sharing: :member_public).pluck(:id)
-      matchmaker_ids += user_friends.accepted.joins(:companion).where(users: {status: :active}).pluck(:companion_id)
+    if fixed? && role_matchmaker?
+      matchmaker_ids = User.fixed.where(role_matchmaker: true, member_sharing: :member_public).pluck(:id)
+      matchmaker_ids += user_friends.accepted.joins(:companion).where(users: {status: :fixed}).pluck(:companion_id)
       matchmaker_ids.delete(self.id) if delete_self
       matchmaker_ids.uniq
     else
@@ -187,16 +189,16 @@ class User < ActiveRecord::Base
   end
 
   def viewable?(user)
-    if active? && user.active? && role_matchmaker?
+    if fixed? && user.fixed? && role_matchmaker?
       matchmaker_ids = viewable_matchmaker_ids(false)
       matchmaker_ids&.include?(user.matchmaker_id)
     end
   end
 
   def viewables
-    if active? && role_matchmaker?
+    if fixed? && role_matchmaker?
       matchmaker_ids = viewable_matchmaker_ids
-      User.active.where(role_courtship: true, matchmaker_id: matchmaker_ids)
+      User.fixed.where(role_courtship: true, matchmaker_id: matchmaker_ids)
     else
       User.none
     end
