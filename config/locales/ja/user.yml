@@ -7,7 +7,7 @@ ja:
         id: 'Id'
         status: '会員ｽﾃｰﾀｽ'
         email: 'Eメール'
-        nickname: 'ﾆｯｸﾈｰﾑ'
+        code: '会員番号'
         name: '氏名'
         first_name: '名'
         last_name: '氏'
@@ -149,11 +149,10 @@ ja:
       invite_user_subtitle: 'Eメールと性別を指定して招待メールを送信してください'
       send_invitation: '招待メールを送信する'
       sent_invitation: '招待メールを送信しました。'
-      email_or_nickname: 'Eメール または ﾆｯｸﾈｰﾑ'
+      email_or_code: 'Eメール または 会員番号'
       accept_invitation_subtitle: 'パスワードを設定して招待を承認してください'
       accept_invitation: '招待を承認する'
   errors:
     user:
       invalid_token: 'トークンが無効です'
-      nickname: 'は半角英数字です'
       mail_not_exist: '指定されたメールアドレスのアカウントは存在しません。'

@@ -35,15 +35,13 @@ class User < ActiveRecord::Base
   enum prefecture: Prefecture::CODES
 
   validates :status, presence: true
-  validates :nickname, presence: true, uniqueness: true,
-            length: { minimum: 3, maximum: 20 },
-            format: { with: /\A[a-z0-9]+\z/, message: I18n.t('errors.user.nickname')}, if: -> u { u.since?(:check_matchmaker) }
   validates :email, presence: true, uniqueness: true
   validates :sex, presence: true
   validates :member_sharing, presence: true
   validates :height, numericality: { only_integer: true, greater_than: 0, less_than: 256 }, allow_blank: true
   validates :weight, numericality: { only_integer: true, greater_than: 0, less_than: 256 }, allow_blank: true
 
+  validates :code, presence: true, uniqueness: true
   validates :first_name, presence: true, if: -> { since?(:check_matchmaker) }
   validates :last_name, presence: true, if: -> { since?(:check_matchmaker) }
   validates :first_name_kana, presence: true, if: -> { since?(:check_matchmaker) }
@@ -66,10 +64,19 @@ class User < ActiveRecord::Base
   validates :income, presence: true, if: -> { since?(:check_matchmaker) }
   validates :remark_matchmaker, presence: true, if: -> { since?(:check_head) }
 
+  before_create :alloc_code
+
   SEARCHABLE_EQ_ATTRIBUTES = %i(status sex lang country prefecture religion baptized drinking smoking
                                 role_courtship role_matchmaker role_head blood marital_status diseased
                                 member_sharing matchmaker_id created_by_id updated_by_id)
 
+
+  def alloc_code
+    today = Date.today
+    codes = User.where('code like ?', "#{today.strftime('%y%m%d')}%").pluck(:code)
+    max_code = codes.map{ |code| code[6..-1].to_i }.max || 0
+    self.code = "#{today.strftime('%y%m%d')}#{max_code + 1}"
+  end
 
   def since?(since_status)
     User.statuses[self.status].to_i >= User.statuses[since_status].to_i
@@ -89,7 +96,7 @@ class User < ActiveRecord::Base
 
   def registrable_attributes(user)
     if role_head? || (role_matchmaker? && (user.nil? || user.matchmaker_id == self.id)) || (user.id == self.id)
-      attrs = %i(status nickname email first_name last_name first_name_kana last_name_kana
+      attrs = %i(status email first_name last_name first_name_kana last_name_kana
                 first_name_en last_name_en sex birthday tel fax mobile
                 lang country zip prefecture city street building
                 religion sect church baptized baptized_year
@@ -108,17 +115,17 @@ class User < ActiveRecord::Base
 
   def list_attributes
     if role_head? || role_matchmaker?
-      attrs = %i(id status nickname first_name last_name first_name_kana last_name_kana member_sharing
+      attrs = %i(id status code first_name last_name first_name_kana last_name_kana member_sharing
                 sex age religion prefecture role_courtship role_matchmaker bio avatar_url)
     else
-      attrs = %i(nickname sex age religion prefecture bio role_courtship
+      attrs = %i(code sex age religion prefecture bio role_courtship
                 role_courtship role_matchmaker avatar_url)
     end
     attrs
   end
 
   def public_attributes
-    %i(status nickname id sex age prefecture bio role_courtship
+    %i(status code id sex age prefecture bio role_courtship
       blood weight height drinking smoking diseased disease_name
       religion sect church baptized baptized_year
       job education income hobby bio remark_self remark_matchmaker marital_status

@@ -8,7 +8,7 @@ class UserFriend < ApplicationRecord
   validates :companion_id, presence: true
 
   def user_name
-    user&.nickname
+    user&.code
   end
 
   def user_avatar_url

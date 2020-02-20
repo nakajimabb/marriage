@@ -71,7 +71,7 @@ class RoomsController < ApplicationController
     auth ||= permitted.include?(@room.availability(current_user))
     if auth
       room = @room.attributes
-      user_attrs = [:nickname, :sex, :age, :marital_status, :role_courtship, :role_matchmaker, :religion, :job, :hobby]
+      user_attrs = [:code, :sex, :age, :marital_status, :role_courtship, :role_matchmaker, :religion, :job, :hobby]
       users = @room.users
       users = users.map{ |user| user_attrs.map { |c| [c, user.try(c)] }.to_h }
       user = @room.user
@@ -85,7 +85,7 @@ class RoomsController < ApplicationController
   def edit
     if current_user.role_head? || current_user.id == @room.user_id
       room = @room.attributes
-      user_attrs = [:nickname, :sex, :age, :marital_status, :role_courtship, :role_matchmaker, :religion, :job, :hobby]
+      user_attrs = [:code, :sex, :age, :marital_status, :role_courtship, :role_matchmaker, :religion, :job, :hobby]
       users = @room.users
       users = users.map{ |user| user_attrs.map { |c| [c, user.try(c)] }.to_h }
       render json: {room: room, users: users}

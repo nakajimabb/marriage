@@ -5,9 +5,9 @@ en:
     attributes:
       user:
         id: 'Id'
-        status: 'status'
+        status: 'Status'
         email: 'Email'
-        nickname: 'Nickname'
+        code: 'Code'
         name: 'Name'
         first_name: 'First name'
         last_name: 'Last name'
@@ -149,11 +149,10 @@ en:
       invite_user_subtitle: 'input email and sex, and send invitation.'
       send_invitation: 'send Invitation'
       sent_invitation: 'sent Invitation mail'
-      email_or_nickname: 'Email or nickname'
+      email_or_code: 'Email or code'
       accept_invitation_subtitle: 'input password and accept invitation.'
       accept_invitation: 'Accept invitation'
   errors:
     user:
       invalid_token: 'invalid Token'
-      nickname: ' is permitted only half-width alphanumeric.'
       mail_not_exist: 'mail not exist.'
