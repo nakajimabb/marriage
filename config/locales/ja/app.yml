@@ -21,6 +21,7 @@ ja:
       human_number_unit: '人'
       none: 'なし'
       sent_mail: 'メールを送信しました'
+      half_width_digit: '半角数字'
   errors:
     app:
       occurred: 'エラーが発生しました。'

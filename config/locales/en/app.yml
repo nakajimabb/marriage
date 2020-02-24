@@ -21,6 +21,7 @@ en:
       human_number_unit: ''
       none: 'None'
       sent_mail: 'Sent mail'
+      half_width_digit: 'half width digit'
   errors:
     app:
       occurred: 'Error has occurred.'
